@@ -9,7 +9,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import Modal from '@mui/joy/Modal';
 import { ModalDialog } from '@mui/joy';
 import Fade from '@mui/material/Fade';
-import '@fontsource/inter';
 
 interface GameCardProps {
     title: string;
@@ -55,26 +54,28 @@ const GameCard: React.FC<GameCardProps> = ({ title, desc, image }) => {
                 <Box
                     sx={{
                         position: 'absolute',
-                        bottom: 0,
+                        top: 0,
                         left: 0,
                         width: '100%',
-                        bgcolor: 'rgba(0, 0, 0, 0.54)',
+                        height: '100%',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        bgcolor: 'rgba(0, 0, 0, 0.8)',
                         color: 'white',
-                        padding: '10px',
-                        transform: `translateY(${isHovered ? '0%' : '100%'})`,
-                        transition: 'transform 0.15s ease-in-out',
+                        opacity: isHovered ? 1 : 0,
+                        transition: 'opacity 0.3s ease-in-out',
                     }}
                 >
                     <Typography variant="h6">{title}</Typography>
-                    <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                        <IconButton
-                            aria-label="add to favorites"
-                            sx={{ color: 'white', paddingRight: "10%" }}
-                            onClick={(e) => e.stopPropagation()} // Prevent modal from opening when clicking the favorite button
-                        >
-                            <FavoriteIcon />
-                        </IconButton>
-                    </Box>
+                    <IconButton
+                        aria-label="add to favorites"
+                        sx={{ color: 'white', mt: 1 }}
+                        onClick={(e) => e.stopPropagation()} // Prevent modal from opening when clicking the favorite button
+                    >
+                        <FavoriteIcon />
+                    </IconButton>
                 </Box>
             </Card>
 
@@ -83,12 +84,6 @@ const GameCard: React.FC<GameCardProps> = ({ title, desc, image }) => {
                 onClose={handleCloseModal}
                 aria-labelledby="game-modal-title"
                 aria-describedby="game-modal-description"
-                slotProps={{
-                    backdrop: {
-                        TransitionComponent: Fade,
-                    },
-                }}
-
             >
                 <Fade in={isModalOpen}>
                     <ModalDialog>
@@ -105,7 +100,7 @@ const GameCard: React.FC<GameCardProps> = ({ title, desc, image }) => {
                             maxHeight: '90vh',
                             overflowY: 'auto',
                             fontFamily: 'Inter, sans-serif',
-                            borderRadius: '16px', // Added borderRadius to make the modal rounder
+                            borderRadius: '16px', 
                         }}>
                             <IconButton
                                 aria-label="close"
@@ -115,7 +110,7 @@ const GameCard: React.FC<GameCardProps> = ({ title, desc, image }) => {
                                 <CloseIcon />
                             </IconButton>
 
-                            <Typography id="game-modal-title" variant="h3" gutterBottom component="h2" sx={{ color: "black" }}>
+                            <Typography id="game-modal-title" variant="h4" gutterBottom component="h2" sx={{ color: "black", alignItems: "center"}}>
                                 <b>{title}</b>
                             </Typography>
 
