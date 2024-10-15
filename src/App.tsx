@@ -9,8 +9,8 @@ function App() {
   useEffect(() => {
     getGames().then((data) => {
       console.log(data);
-    }
-    )
+    })
+
   }, []);
 
   return (
