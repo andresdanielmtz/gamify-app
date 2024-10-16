@@ -10,6 +10,9 @@ import Popover from '@mui/material/Popover';
 import MenuItem from '@mui/material/MenuItem';
 import RatingGame from '../Rating/Rating';
 import useStore from '../../createStore';
+import { unixToYear } from '../../utils/unixToDate';
+import { Modal } from '@mui/material';
+
 
 interface ProfileGameCardProps {
   id: string;
@@ -17,11 +20,14 @@ interface ProfileGameCardProps {
   description: string;
   image: string;
   rating?: number;
+  date: number;
 }
 
-export default function GameCardProfile({ id, title, description, image, rating }: ProfileGameCardProps) {
+export default function GameCardProfile({ id, title, image, rating, date }: ProfileGameCardProps) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const removeGame = useStore((state) => state.removeGame);
+  const setRating = useStore((state) => state.setRating);
+  const gameYear = unixToYear(date);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -37,6 +43,13 @@ export default function GameCardProfile({ id, title, description, image, rating 
     handleClose();
   };
 
+  const handleRatingChange = (event: React.ChangeEvent<{}>, newValue: number | null) => {
+    if (newValue !== null) {
+      event.stopPropagation();
+      setRating(id, newValue);
+    }
+  };
+
   const open = Boolean(anchorEl);
   const popoverId = open ? 'simple-popover' : undefined;
 
@@ -45,7 +58,7 @@ export default function GameCardProfile({ id, title, description, image, rating 
       height: '100%',
       display: 'flex',
       flexDirection: 'column',
-      backgroundColor: "rgba(30, 30, 30, 1)",
+      backgroundColor: "rgba(255, 255, 255, 0.08)",
       borderRadius: "15px",
       color: "white"
     }}>
@@ -57,22 +70,36 @@ export default function GameCardProfile({ id, title, description, image, rating 
           alt={title}
         />
         <CardContent sx={{ flexGrow: 1 }}>
-          <Typography gutterBottom variant="h6" component="div" noWrap>
+          <Typography gutterBottom variant="h5" component="div" noWrap>
             {title}
           </Typography>
-          <Typography variant="body2" sx={{ color: 'white', mb: 2 }}>
-            {description.length > 100 ? `${description.substring(0, 100)}...` : description}
+          <Typography variant="body1" sx={{
+            color: "white",
+            opacity: 0.8,
+          }} noWrap>
+            ({gameYear})
           </Typography>
-          <RatingGame value={rating || 0} id={id} />
         </CardContent>
       </CardActionArea>
-      <IconButton
-        aria-describedby={popoverId}
-        onClick={handleClick}
-        sx={{ color: 'white', alignSelf: 'flex-end', padding: 1 }}
-      >
-        <MoreVertIcon />
-      </IconButton>
+
+      <div style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: '0 16px',
+        paddingBottom: '0.5rem',
+      }}>
+        <RatingGame value={rating || 0} id={id} onChange={handleRatingChange} />
+        <IconButton
+          aria-describedby={popoverId}
+          onClick={handleClick}
+          sx={{
+            color: 'white',
+          }}
+        >
+          <MoreVertIcon />
+        </IconButton>
+      </div>
       <Popover
         id={popoverId}
         open={open}

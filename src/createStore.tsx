@@ -1,11 +1,13 @@
 import { create as createStore } from 'zustand';
 
 interface Game {
+    first_release_date: number;
     id: string;
     name: string;
     summary: string;
     cover: { url: string };
     rating?: number; // Add rating property
+    date: number;
 }
 
 interface StoreState {

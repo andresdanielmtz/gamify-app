@@ -16,6 +16,7 @@ interface Game {
   cover: {
     url: string;
   };
+  first_release_date: number;
 }
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
       {gamesData.map((game) => (
         <Grid item xs={12} sm={6} md={4} lg={3} key={game.id}>
           <GameCard
+            date={game.first_release_date}
             id={game.id}
             title={game.name}
             desc={game.summary}

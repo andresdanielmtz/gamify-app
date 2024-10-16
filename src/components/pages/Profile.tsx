@@ -3,25 +3,29 @@ import useStore from '../../createStore';
 import GameCardProfile from '../GameCard/ProfileCard';
 const Profile = () => {
     const gamesPlayed = useStore((state) => state.gamesPlayed);
-
     return (
         <div id="main-page">
-            <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+            <Container maxWidth="lg" sx={{ mb: 4 }}>
                 <Box sx={{ textAlign: 'center', maxWidth: "100%" }}>
                     <Typography variant="h4" component="h1" gutterBottom sx={{
+                        fontWeight: 900,
                         paddingBottom: 1,
                     }}>
-                        User Profile
+                        User
                     </Typography>
                     {gamesPlayed.length > 0 ? (
                         <>
-                            <Typography variant="h6" component="h2" gutterBottom sx={{
-                                paddingBottom: 2,
+                            <Typography variant="h6" gutterBottom sx={{
+                                paddingBottom: 5,
 
                             }}>
-                                Games Played
+                                These are the games you've played:
                             </Typography>
-                            <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 2 }}>
+                            <Box sx={{ 
+                                display: 'grid', 
+                                gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' }, 
+                                gap: { xs: 3, sm: 2 } 
+                            }}>
                                 {gamesPlayed.map((game) => (
                                     <GameCardProfile
                                         key={game.id}
@@ -29,6 +33,7 @@ const Profile = () => {
                                         title={game.name}
                                         description={game.summary}
                                         image={game.cover.url}
+                                        date={game.first_release_date}
                                     />
                                 ))}
                             </Box>

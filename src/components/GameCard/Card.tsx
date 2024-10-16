@@ -10,15 +10,17 @@ import Modal from '@mui/joy/Modal';
 import { ModalDialog } from '@mui/joy';
 import Fade from '@mui/material/Fade';
 import useStore from '../../createStore';
+import { unixToYear } from '../../utils/unixToDate';
 
 interface GameCardProps {
     id: string;
     title: string;
     desc?: string;
     image: string;
+    date: number;
 }
 
-const GameCard: React.FC<GameCardProps> = ({ id, title, desc, image }) => {
+const GameCard: React.FC<GameCardProps> = ({ id, title, desc, image, date}) => {
     const [isHovered, setIsHovered] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const addGame = useStore((state) => state.addGame);
@@ -26,12 +28,13 @@ const GameCard: React.FC<GameCardProps> = ({ id, title, desc, image }) => {
     const removeGame = useStore((state) => state.removeGame);
 
     const isLiked = gamesPlayed.some((game) => game.id === id);
+    const gameYear = unixToYear(date);
 
     const handleLikeClick = () => {
         if (isLiked) {
             removeGame(id);
         } else {
-            addGame({ id, name: title, summary: desc || "", cover: { url: image } });
+            addGame({ id, name: title, summary: desc || "", cover: { url: image }, first_release_date: date, date });
         }
     }
 
@@ -91,6 +94,7 @@ const GameCard: React.FC<GameCardProps> = ({ id, title, desc, image }) => {
                     }}
                 >
                     <Typography variant="h6">{title}</Typography>
+                    <Typography variant="body2">{gameYear}</Typography>
                     <IconButton
                         aria-label="add to favorites"
                         sx={{ color: isLiked ? '#5fdca8' : 'white', mt: 1, transition: 'color 0.3s ease-in-out' }}
