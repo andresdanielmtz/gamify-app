@@ -24,6 +24,7 @@ function App() {
   axios.defaults.baseURL = import.meta.env.VITE_BACKEND_ENDPOINT;
   const [loading, setLoading] = useState(true);
 
+
   useEffect(() => {
     getGames().then((data) => {
       setGamesData(data);
@@ -36,6 +37,7 @@ function App() {
       {gamesData.map((game) => (
         <Grid item xs={12} sm={6} md={4} lg={3} key={game.id}>
           <GameCard
+            id={game.id}
             title={game.name}
             desc={game.summary}
             image={game.cover.url}
@@ -52,7 +54,7 @@ function App() {
       </div>
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
         <Routes>
-        <Route path="/" element={loading ? <CircularProgress /> : <IndexPage />} />
+          <Route path="/" element={loading ? <CircularProgress /> : <IndexPage />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/settings" element={<Settings />} />
         </Routes>

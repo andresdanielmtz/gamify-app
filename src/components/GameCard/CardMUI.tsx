@@ -9,16 +9,32 @@ import CloseIcon from '@mui/icons-material/Close';
 import Modal from '@mui/joy/Modal';
 import { ModalDialog } from '@mui/joy';
 import Fade from '@mui/material/Fade';
+import useStore from '../../createStore';
+
 
 interface GameCardProps {
+    id: string; // Added id prop
     title: string;
     desc?: string;
     image: string;
 }
 
-const GameCard: React.FC<GameCardProps> = ({ title, desc, image }) => {
+const GameCard: React.FC<GameCardProps> = ({ id, title, desc, image }) => {
     const [isHovered, setIsHovered] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const addGame = useStore((state) => state.addGame);
+    const gamesPlayed = useStore((state) => state.gamesPlayed);
+    const removeGame = useStore((state) => state.removeGame);
+
+    const isLiked = gamesPlayed.some((game) => game.id === id);
+
+    const handleLikeClick =() => {
+        if (isLiked) {
+            removeGame({ id, name: title, summary: desc || "", cover: { url: image } });
+        } else {
+            addGame({ id, name: title, summary: desc || "", cover: { url: image } });
+        }
+    }
 
     const handleCardClick = (event: React.MouseEvent) => {
         event.stopPropagation();
@@ -40,12 +56,12 @@ const GameCard: React.FC<GameCardProps> = ({ title, desc, image }) => {
                     overflow: 'hidden',
                     cursor: 'pointer',
                     fontFamily: 'Inter, sans-serif',
-                    boxShadow: '0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)', // Added external shadow
-                    transition: 'box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out', // Added transition for smooth effect
+                    boxShadow: '0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)', 
+                    transition: 'box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out', 
                     '&:hover': {
-                        boxShadow: '0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)', // Increased shadow on hover
-                        transform: 'translateY(-5px)', // Slight lift effect on hover
-                    },
+                        boxShadow: '0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)',
+                        transform: 'translateY(-3px)',  // slight lift on hover
+                    }, 
                 }}
 
                 onMouseEnter={() => setIsHovered(true)}
@@ -78,8 +94,11 @@ const GameCard: React.FC<GameCardProps> = ({ title, desc, image }) => {
                     <Typography variant="h6">{title}</Typography>
                     <IconButton
                         aria-label="add to favorites"
-                        sx={{ color: 'white', mt: 1 }}
-                        onClick={(e) => e.stopPropagation()} // Prevent modal from opening when clicking the favorite button
+                        sx={{ color: isLiked ? '#92cbf7' : 'white', mt: 1, transition: 'color 0.3s ease-in-out' }}
+                        onClick={(event) => {
+                            event.stopPropagation();
+                            handleLikeClick();
+                        }}
                     >
                         <FavoriteIcon />
                     </IconButton>
@@ -107,7 +126,7 @@ const GameCard: React.FC<GameCardProps> = ({ title, desc, image }) => {
                             maxHeight: '90vh',
                             overflowY: 'auto',
                             fontFamily: 'Inter, sans-serif',
-                            borderRadius: '16px', 
+                            borderRadius: '16px',
                         }}>
                             <IconButton
                                 aria-label="close"
@@ -117,7 +136,7 @@ const GameCard: React.FC<GameCardProps> = ({ title, desc, image }) => {
                                 <CloseIcon />
                             </IconButton>
 
-                            <Typography id="game-modal-title" variant="h4" gutterBottom component="h2" sx={{ color: "black", alignItems: "center"}}>
+                            <Typography id="game-modal-title" variant="h4" gutterBottom component="h2" sx={{ color: "black", alignItems: "center" }}>
                                 <b>{title}</b>
                             </Typography>
 
