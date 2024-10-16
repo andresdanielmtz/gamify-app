@@ -13,7 +13,7 @@ import useStore from '../../createStore';
 
 
 interface GameCardProps {
-    id: string; // Added id prop
+    id: string;
     title: string;
     desc?: string;
     image: string;
@@ -60,7 +60,7 @@ const GameCard: React.FC<GameCardProps> = ({ id, title, desc, image }) => {
                     transition: 'box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out', 
                     '&:hover': {
                         boxShadow: '0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)',
-                        transform: 'translateY(-3px)',  // slight lift on hover
+                        transform: 'translateY(-3px)', 
                     }, 
                 }}
 
@@ -94,7 +94,7 @@ const GameCard: React.FC<GameCardProps> = ({ id, title, desc, image }) => {
                     <Typography variant="h6">{title}</Typography>
                     <IconButton
                         aria-label="add to favorites"
-                        sx={{ color: isLiked ? '#92cbf7' : 'white', mt: 1, transition: 'color 0.3s ease-in-out' }}
+                        sx={{ color: isLiked ? '#5fdca8' : 'white', mt: 1, transition: 'color 0.3s ease-in-out' }}
                         onClick={(event) => {
                             event.stopPropagation();
                             handleLikeClick();

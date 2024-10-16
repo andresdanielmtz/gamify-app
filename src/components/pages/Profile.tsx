@@ -1,5 +1,6 @@
-import { Container, Typography, Box, List, ListItem, ListItemText } from '@mui/material';
+import { Container, Typography, Box } from '@mui/material';
 import useStore from '../../createStore';
+import GameCardProfile from '../GameCard/ProfileCard';
 
 const Profile = () => {
     const gamesPlayed = useStore((state) => state.gamesPlayed);
@@ -14,13 +15,16 @@ const Profile = () => {
                     <Typography variant="h6" component="h2" gutterBottom>
                         Games Played
                     </Typography>
-                    <List>
+                    <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 2 }}>
                         {gamesPlayed.map((game) => (
-                            <ListItem key={game.id}>
-                                <ListItemText primary={game.name} secondary={game.summary} />
-                            </ListItem>
+                            <GameCardProfile
+                                key={game.id}
+                                title={game.name}
+                                description={game.summary}
+                                image={game.cover.url}
+                            />
                         ))}
-                    </List>
+                    </Box>
                 </Box>
             </Container>
         </div>

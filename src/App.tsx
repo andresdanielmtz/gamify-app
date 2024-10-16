@@ -20,10 +20,10 @@ interface Game {
 }
 
 function App() {
-  const [gamesData, setGamesData] = useState<Game[]>([]);
   axios.defaults.baseURL = import.meta.env.VITE_BACKEND_ENDPOINT;
-  const [loading, setLoading] = useState(true);
 
+  const [gamesData, setGamesData] = useState<Game[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     getGames().then((data) => {
