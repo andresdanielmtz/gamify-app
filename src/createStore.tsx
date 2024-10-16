@@ -5,14 +5,16 @@ interface Game {
     name: string;
     summary: string;
     cover: { url: string };
+    rating?: number; // Add rating property
 }
 
 interface StoreState {
     gamesPlayed: Game[];
     addGame: (game: Game) => void;
-    removeGame: (game: Game) => void;
+    removeGame: (id: string) => void; // Update removeGame to take only id
     modifyGame: (game: Game) => void;
     clearGames: () => void;
+    setRating: (id: string, rating: number) => void; // Add setRating function
 }
 
 const useStore = createStore<StoreState>((set) => ({
@@ -24,11 +26,16 @@ const useStore = createStore<StoreState>((set) => ({
         }
         return state;
     }),
-    removeGame: (game) => set((state) => ({ gamesPlayed: state.gamesPlayed.filter((g) => g.id !== game.id) })),
+    removeGame: (id) => set((state) => ({
+        gamesPlayed: state.gamesPlayed.map((g) => (g.id === id ? { ...g, rating: 0 } : g)).filter((g) => g.id !== id),
+    })), // When removing the game, it will also remove its rating
     modifyGame: (game) => set((state) => ({
         gamesPlayed: state.gamesPlayed.map((g) => (g.id === game.id ? game : g)),
     })),
     clearGames: () => set({ gamesPlayed: [] }),
+    setRating: (id, rating) => set((state) => ({
+        gamesPlayed: state.gamesPlayed.map((g) => (g.id === id ? { ...g, rating } : g)),
+    })),
 }));
 
 export default useStore;

@@ -11,7 +11,6 @@ import { ModalDialog } from '@mui/joy';
 import Fade from '@mui/material/Fade';
 import useStore from '../../createStore';
 
-
 interface GameCardProps {
     id: string;
     title: string;
@@ -28,9 +27,9 @@ const GameCard: React.FC<GameCardProps> = ({ id, title, desc, image }) => {
 
     const isLiked = gamesPlayed.some((game) => game.id === id);
 
-    const handleLikeClick =() => {
+    const handleLikeClick = () => {
         if (isLiked) {
-            removeGame({ id, name: title, summary: desc || "", cover: { url: image } });
+            removeGame(id);
         } else {
             addGame({ id, name: title, summary: desc || "", cover: { url: image } });
         }
@@ -56,12 +55,12 @@ const GameCard: React.FC<GameCardProps> = ({ id, title, desc, image }) => {
                     overflow: 'hidden',
                     cursor: 'pointer',
                     fontFamily: 'Inter, sans-serif',
-                    boxShadow: '0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)', 
-                    transition: 'box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out', 
+                    boxShadow: '0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)',
+                    transition: 'box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out',
                     '&:hover': {
                         boxShadow: '0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)',
-                        transform: 'translateY(-3px)', 
-                    }, 
+                        transform: 'translateY(-3px)',
+                    },
                 }}
 
                 onMouseEnter={() => setIsHovered(true)}

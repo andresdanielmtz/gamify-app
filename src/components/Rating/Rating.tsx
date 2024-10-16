@@ -1,33 +1,28 @@
-import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
 import StarIcon from '@mui/icons-material/Star';
+import useStore from '../../createStore';
 
-const labels: { [index: string]: string } = {
-  0.5: 'Useless',
-  1: 'Useless+',
-  1.5: 'Poor',
-  2: 'Poor+',
-  2.5: 'Ok',
-  3: 'Ok+',
-  3.5: 'Good',
-  4: 'Good+',
-  4.5: 'Excellent',
-  5: 'Excellent+',
-};
 
-export default function TextRating() {
-  const value = 3.5;
+interface RatingProps {
+    value: number;
+    id: string,
+}
 
-  return (
-    <Box sx={{ width: 200, display: 'flex', alignItems: 'center' }}>
-      <Rating
-        name="text-feedback"
-        value={value}
-        readOnly
-        precision={0.5}
-        emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
-      />
-      <Box sx={{ ml: 2 }}>{labels[value]}</Box>
-    </Box>
-  );
+export default function RatingGame({ value, id }: RatingProps & { id: string }) {
+    const setRating = useStore((state) => state.setRating);
+    return (
+        <Rating
+            name="text-feedback"
+            value={value}
+            precision={0.5}
+            emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
+            defaultValue={0}
+            max={5}
+            onChange={(_event, newValue) => {
+                if (newValue !== null) {
+                    setRating(id, newValue);
+                }
+            }}
+        />
+    );
 }

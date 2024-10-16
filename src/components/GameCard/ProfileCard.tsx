@@ -8,15 +8,20 @@ import IconButton from '@mui/material/IconButton';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Popover from '@mui/material/Popover';
 import MenuItem from '@mui/material/MenuItem';
+import RatingGame from '../Rating/Rating';
+import useStore from '../../createStore';
 
 interface ProfileGameCardProps {
-  id?: string;
+  id: string;
   title: string;
   description: string;
   image: string;
+  rating?: number;
 }
-export default function GameCardProfile({ title, description, image }: ProfileGameCardProps) {
+
+export default function GameCardProfile({ id, title, description, image, rating }: ProfileGameCardProps) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const removeGame = useStore((state) => state.removeGame);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -26,12 +31,22 @@ export default function GameCardProfile({ title, description, image }: ProfileGa
     setAnchorEl(null);
   };
 
+  const handleRemove = () => {
+    console.log('Attempting to remove game with id:', id);
+    removeGame(id);
+    handleClose();
+  };
+
   const open = Boolean(anchorEl);
   const popoverId = open ? 'simple-popover' : undefined;
 
   return (
     <Card sx={{
-      maxWidth: 345, backgroundColor: "#1e1e1e",
+      height: '100%',
+      display: 'flex',
+      flexDirection: 'column',
+      backgroundColor: "rgba(30, 30, 30, 1)",
+      borderRadius: "15px",
       color: "white"
     }}>
       <CardActionArea>
@@ -39,23 +54,22 @@ export default function GameCardProfile({ title, description, image }: ProfileGa
           component="img"
           height="140"
           image={image}
-          alt="green iguana"
+          alt={title}
         />
-
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
+        <CardContent sx={{ flexGrow: 1 }}>
+          <Typography gutterBottom variant="h6" component="div" noWrap>
             {title}
           </Typography>
-          <Typography variant="body2" sx={{ color: 'white' }}>
-          {description.length > 50 ? `${description.substring(0, 100)}...` : description}
+          <Typography variant="body2" sx={{ color: 'white', mb: 2 }}>
+            {description.length > 100 ? `${description.substring(0, 100)}...` : description}
           </Typography>
+          <RatingGame value={rating || 0} id={id} />
         </CardContent>
-        
       </CardActionArea>
       <IconButton
         aria-describedby={popoverId}
         onClick={handleClick}
-        sx={{ color: 'white' }}
+        sx={{ color: 'white', alignSelf: 'flex-end', padding: 1 }}
       >
         <MoreVertIcon />
       </IconButton>
@@ -66,11 +80,15 @@ export default function GameCardProfile({ title, description, image }: ProfileGa
         onClose={handleClose}
         anchorOrigin={{
           vertical: 'bottom',
-          horizontal: 'center',
+          horizontal: 'right',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
         }}
       >
         <MenuItem onClick={handleClose}>Modify</MenuItem>
-        <MenuItem onClick={handleClose}>Eliminate</MenuItem>
+        <MenuItem onClick={handleRemove}>Delete</MenuItem>
       </Popover>
     </Card>
   );

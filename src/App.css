@@ -1,26 +1,23 @@
 #root {
-  max-width: 1280px;
+
   margin: 0 auto;
-  padding: 2rem;
+
   text-align: center;
 }
 
-.card {
-  padding: 2em;
-}
+#main-page {
 
-#main-page{
-  max-width: 100%;
-  margin: 0 auto;
+
   padding: 2rem;
   text-align: center;
-  
+
 }
 
-#nav { 
+#nav {
   position: -webkit-sticky;
   position: sticky;
   top: 0;
   background-color: white;
   z-index: 1000;
+  width: 100%;
 }

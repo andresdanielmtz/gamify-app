@@ -15,7 +15,6 @@ import InputBase from '@mui/material/InputBase';
 import { IconButton } from '@mui/material';
 import { Link } from 'react-router-dom';
 
-
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -59,6 +58,7 @@ export default function PrimarySearchAppBar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
+
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -93,11 +93,11 @@ export default function PrimarySearchAppBar() {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>
-        <Link className = "link-styles-dropdown" to="/profile">Profile</Link>
+        <Link className="link-styles-dropdown" to="/profile">Profile</Link>
       </MenuItem>
       <MenuItem onClick={handleMenuClose}>
-      <Link className = "link-styles-dropdown" to="/settings">Settings</Link>
-        </MenuItem>
+        <Link className="link-styles-dropdown" to="/settings">Settings</Link>
+      </MenuItem>
     </Menu>
   );
 
@@ -154,29 +154,30 @@ export default function PrimarySearchAppBar() {
   );
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" sx={{ bgcolor: '#1e1e1e' }}>
-        <Toolbar>
+    <Box sx={{
+      flexGrow: 1, width: '100%', alignContent: 'center', margin: '0 auto',
+    }}>
+      <AppBar position="static" sx={{ backgroundColor: '#1e1e1e' }}>
+        <Toolbar sx={{ justifyContent: 'space-between', maxWidth: 'lg', width: '100%', margin: '0 auto' }}>
           <Typography
             variant="h6"
             noWrap
             component="div"
-            sx={{ display: { xs: 'none', sm: 'block' }, color: 'white' }}
+            sx={{ display: 'flex', alignItems: 'center' }}
           >
-            <Link to="/" className = "link-styles"> Gamify </Link>
+            <Link to="/" className="link-styles"> Gamify </Link>
           </Typography>
-          <Search>
+          <Search sx={{ flexGrow: 1, maxWidth: '400px', mx: 2 }}>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
+              sx={{ width: '100%' }}
             />
           </Search>
-          <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-
+          <Box>
             <IconButton
               size="large"
               edge="end"
@@ -185,6 +186,7 @@ export default function PrimarySearchAppBar() {
               aria-haspopup="true"
               onClick={handleProfileMenuOpen}
               color="inherit"
+              sx={{ mr: 2 }}
             >
               <AccountCircle />
             </IconButton>
