@@ -40,7 +40,14 @@ const GameCard: React.FC<GameCardProps> = ({ title, desc, image }) => {
                     overflow: 'hidden',
                     cursor: 'pointer',
                     fontFamily: 'Inter, sans-serif',
+                    boxShadow: '0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)', // Added external shadow
+                    transition: 'box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out', // Added transition for smooth effect
+                    '&:hover': {
+                        boxShadow: '0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)', // Increased shadow on hover
+                        transform: 'translateY(-5px)', // Slight lift effect on hover
+                    },
                 }}
+
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
                 onClick={handleCardClick}

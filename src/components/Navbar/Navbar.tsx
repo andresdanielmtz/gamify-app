@@ -10,7 +10,6 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import SearchIcon from '@mui/icons-material/Search';
-import MenuIcon from '@mui/icons-material/Menu';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import { IconButton } from '@mui/material';
@@ -95,9 +94,11 @@ export default function PrimarySearchAppBar() {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>
-        <Link to="/profile">Profile</Link>
+        <Link className = "link-styles-dropdown" to="/profile">Profile</Link>
       </MenuItem>
-      <MenuItem onClick={handleMenuClose}>Settings</MenuItem>
+      <MenuItem onClick={handleMenuClose}>
+      <Link className = "link-styles-dropdown" to="/settings">Settings</Link>
+        </MenuItem>
     </Menu>
   );
 
@@ -163,7 +164,7 @@ export default function PrimarySearchAppBar() {
             component="div"
             sx={{ display: { xs: 'none', sm: 'block' }, color: 'white' }}
           >
-            <Link to="/"> Gamify </Link>
+            <Link to="/" className = "link-styles"> Gamify </Link>
           </Typography>
           <Search>
             <SearchIconWrapper>
