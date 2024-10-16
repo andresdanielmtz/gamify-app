@@ -164,8 +164,9 @@ export default function PrimarySearchAppBar() {
             noWrap
             component="div"
             sx={{ display: 'flex', alignItems: 'center' }}
+            fontWeight={900}
           >
-            <Link to="/" className="link-styles"> Gamify </Link>
+            <Link to="/" className="link-styles">Gamify</Link>
           </Typography>
           <Search sx={{ flexGrow: 1, maxWidth: '400px', mx: 2 }}>
             <SearchIconWrapper>

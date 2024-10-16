@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Grid, Container, CircularProgress } from '@mui/material';
 import { Routes, Route } from 'react-router-dom';
 import MenuAppBar from './components/Navbar/Navbar';
-import GameCard from './components/GameCard/CardMUI';
+import GameCard from './components/GameCard/Card';
 import Profile from './components/pages/Profile';
 import { getGames } from './api/getGames';
 import Settings from './components/pages/Settings';
