@@ -9,10 +9,15 @@ const Profile = () => {
         <div id="main-page">
             <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
                 <Box sx={{ textAlign: 'center', maxWidth: "100%" }}>
-                    <Typography variant="h4" component="h1" gutterBottom>
+                    <Typography variant="h4" component="h1" gutterBottom sx={{
+                        paddingBottom: 1,
+                    }}>
                         User Profile
                     </Typography>
-                    <Typography variant="h6" component="h2" gutterBottom>
+
+                    <Typography variant="h6" component="h2" gutterBottom sx={{
+                        paddingBottom: 2,
+                    }}>
                         Games Played
                     </Typography>
                     <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 2 }}>
