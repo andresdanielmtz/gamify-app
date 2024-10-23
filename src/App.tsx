@@ -7,7 +7,6 @@ import MenuAppBar from './components/Navbar/Navbar';
 import GameCard from './components/GameCard/Card';
 import Profile from './components/pages/Profile';
 import { getGames } from './api/getGames';
-import Settings from './components/pages/Settings';
 
 interface Game {
   id: string;
@@ -57,7 +56,6 @@ function App() {
         <Routes>
           <Route path="/" element={loading ? <CircularProgress /> : <IndexPage />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/settings" element={<Settings />} />
         </Routes>
       </Container>
     </div>

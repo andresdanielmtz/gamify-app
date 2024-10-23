@@ -96,7 +96,7 @@ export default function PrimarySearchAppBar() {
         <Link className="link-styles-dropdown" to="/profile">Profile</Link>
       </MenuItem>
       <MenuItem onClick={handleMenuClose}>
-        <Link className="link-styles-dropdown" to="/settings">Settings</Link>
+        <Link className="link-styles-dropdown" to="/login">Logout</Link>
       </MenuItem>
     </Menu>
   );
