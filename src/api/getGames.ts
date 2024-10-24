@@ -1,8 +1,9 @@
 import axios from "axios";
 
 export const getGames = async () => {
-  const url = '/igdb-covers'
-  const response = await axios.get(url);
+  const url = '/api/igdb-covers'
+  const response = await axios.get(url)
+  console.log(response);
   return response.data;
 };
 
