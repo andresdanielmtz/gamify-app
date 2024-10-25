@@ -10,6 +10,9 @@ interface Game {
     date: number;
 }
 
+
+
+
 interface StoreState {
     gamesPlayed: Game[];
     addGame: (game: Game) => void;
@@ -38,6 +41,9 @@ const useStore = createStore<StoreState>((set) => ({
     setRating: (id, rating) => set((state) => ({
         gamesPlayed: state.gamesPlayed.map((g) => (g.id === id ? { ...g, rating } : g)),
     })),
+
+
+
 }));
 
 export default useStore;

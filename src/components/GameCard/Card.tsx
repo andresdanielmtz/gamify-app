@@ -5,6 +5,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import ImageNotSupportedIcon from '@mui/icons-material/ImageNotSupported';
 import useStore from '../../createStore';
 import { unixToYear } from '../../utils/unixToDate';
 import { useNavigate } from 'react-router-dom';
@@ -13,7 +14,7 @@ interface GameCardProps {
     id: string;
     title: string;
     desc?: string;
-    image: string;
+    image?: string;
     date: number;
 }
 
@@ -31,7 +32,7 @@ const GameCard: React.FC<GameCardProps> = ({ id, title, desc, image, date }) => 
         if (isLiked) {
             removeGame(id);
         } else {
-            addGame({ id, name: title, summary: desc || "", cover: { url: image }, first_release_date: date, date });
+            addGame({ id, name: title, summary: desc || "", cover: { url: image || "" }, first_release_date: date, date });
         }
     }
 
@@ -40,13 +41,12 @@ const GameCard: React.FC<GameCardProps> = ({ id, title, desc, image, date }) => 
         navigate(`/game/${id}`);
     };
 
-
-
     return (
         <>
             <Card
                 sx={{
                     maxWidth: 400,
+                    width: 300, 
                     m: 2,
                     height: 400,
                     position: 'relative',
@@ -60,17 +60,31 @@ const GameCard: React.FC<GameCardProps> = ({ id, title, desc, image, date }) => 
                         transform: 'translateY(-3px)',
                     },
                 }}
-
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
                 onClick={handleCardClick}
             >
-                <CardMedia
-                    component="img"
-                    height="400"
-                    image={image}
-                    alt={title}
-                />
+                {image ? (
+                    <CardMedia
+                        component="img"
+                        height="400"
+                        image={image}
+                        alt={title}
+                    />
+                ) : (
+                    <Box
+                        sx={{
+                            height: 400,
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            bgcolor: '#f0f0f0',
+                        }}
+                    >
+                        <ImageNotSupportedIcon sx={{ fontSize: 100, color: '#ccc' }} />
+                    </Box>
+                )}
+                
                 <Box
                     sx={{
                         position: 'absolute',
@@ -102,8 +116,6 @@ const GameCard: React.FC<GameCardProps> = ({ id, title, desc, image, date }) => 
                     </IconButton>
                 </Box>
             </Card>
-
-
         </>
     );
 }

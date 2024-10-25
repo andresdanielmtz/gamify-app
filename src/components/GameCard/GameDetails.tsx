@@ -26,12 +26,10 @@ const GameDetails: React.FC = () => {
 
       try {
         setLoading(true);
-        // First check if the game is in the played list
         const playedGame = gamesPlayed.find(game => game.id === id);
         if (playedGame) {
           setGameDetails(playedGame);
         } else {
-          // If not in played list, fetch from your API
           const response = await axios.get<GameAPIResponse>(`api/games/${id}`);
           setGameDetails(response.data);
         }

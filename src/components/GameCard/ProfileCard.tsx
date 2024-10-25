@@ -11,7 +11,6 @@ import MenuItem from '@mui/material/MenuItem';
 import RatingGame from '../Rating/Rating';
 import useStore from '../../createStore';
 import { unixToYear } from '../../utils/unixToDate';
-import { Modal } from '@mui/material';
 
 
 interface ProfileGameCardProps {

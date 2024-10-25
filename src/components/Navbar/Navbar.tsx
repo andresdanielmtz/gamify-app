@@ -14,7 +14,8 @@ import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import { IconButton } from "@mui/material";
 import { Link } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
+import useStore from "../../createStore";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -59,6 +60,8 @@ export default function PrimarySearchAppBar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
+  const navigate = useNavigate();
+  const gamesPlayed = useStore((state) => state.gamesPlayed);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -195,6 +198,16 @@ export default function PrimarySearchAppBar() {
             />
           </Search>
           <Box>
+            <IconButton
+              size="large"
+              aria-label="show 4 new mails"
+              color="secondary"
+              onClick={() => navigate("/profile")}
+            >
+              <Badge badgeContent={gamesPlayed.length} color="error">
+                <MailIcon />
+              </Badge>
+            </IconButton>
             <IconButton
               size="large"
               edge="end"
