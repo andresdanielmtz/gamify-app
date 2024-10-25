@@ -11,8 +11,8 @@ interface GameFilterParams {
 
 export const getGames = async ({ search = "", ...params } = {}) => {
   const defaultParams: GameFilterParams = {
-    category: 0,
-    platforms: 48,
+    category: 1,
+    platforms: 49,
     sort_by: "rating desc",
     limit: 50,
   };
@@ -30,12 +30,10 @@ export const getGames = async ({ search = "", ...params } = {}) => {
   }
 };
 
-
-
 export const getGamesFiltered = async (params: GameFilterParams = {}) => {
   const defaultParams: GameFilterParams = {
-    category: 0,
-    platforms: 48,
+    category: 1,
+    platforms: 49,
     sort_by: "rating desc",
     limit: 50,
   };

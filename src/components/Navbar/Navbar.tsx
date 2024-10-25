@@ -7,7 +7,6 @@ import Badge from "@mui/material/Badge";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import SearchIcon from "@mui/icons-material/Search";
 import { styled, alpha } from "@mui/material/styles";
@@ -16,6 +15,7 @@ import { IconButton } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import useStore from "../../createStore";
+import StarIcon from '@mui/icons-material/Star';
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -126,7 +126,7 @@ export default function PrimarySearchAppBar() {
       <MenuItem>
         <IconButton size="large" aria-label="show 4 new mails" color="primary">
           <Badge badgeContent={4} color="error">
-            <MailIcon />
+            <StarIcon />
           </Badge>
         </IconButton>
         <p>Messages</p>
@@ -205,7 +205,7 @@ export default function PrimarySearchAppBar() {
               onClick={() => navigate("/profile")}
             >
               <Badge badgeContent={gamesPlayed.length} color="error">
-                <MailIcon />
+                <StarIcon />
               </Badge>
             </IconButton>
             <IconButton
