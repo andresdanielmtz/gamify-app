@@ -6,6 +6,7 @@ interface GameFilterParams {
   platforms?: number;
   sort_by?: string;
   limit?: number;
+  page?: number; 
 }
 
 
@@ -39,7 +40,9 @@ export const getGamesFiltered = async (params: GameFilterParams = {}) => {
   };
 
   const queryParams = { ...defaultParams, ...params };
-  let url = `/api/igdb-covers?category=${queryParams.category}&sort_by=${queryParams.sort_by}&limit=${queryParams.limit}&search=${queryParams.search || ''}`;
+  const offset = (queryParams.page ? queryParams.page - 1 : 0) * (queryParams.limit || 50);
+  let url = `/api/igdb-covers?category=${queryParams.category}&sort_by=${queryParams.sort_by}&limit=${queryParams.limit}&search=${queryParams.search || ''}&offset=${offset}`;
+
 
   if (queryParams.platforms !== undefined) {
     url += `&platforms=${queryParams.platforms}`;

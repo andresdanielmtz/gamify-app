@@ -1,5 +1,5 @@
 import GameCard from "../GameCard/Card";
-import { CircularProgress, Button, MenuItem } from "@mui/material";
+import { CircularProgress, Button, MenuItem, Pagination } from "@mui/material";
 import { useState, useEffect } from "react";
 import { getGamesFiltered } from "../../api/getGames";
 import { useNavigate } from "react-router-dom";
@@ -22,13 +22,18 @@ const Main = () => {
   const [category, setCategory] = useState<number>(0);
   const [platform, setPlatform] = useState<number>(130);
   const [sortBy, setSortBy] = useState<string>("rating desc");
+  const [page, setPage] = useState<number>(1); // Current page state
+  const [totalPages, setTotalPages] = useState<number>(1); // Total pages state
   const navigate = useNavigate();
 
-  const fetchGames = () => {
+  const fetchGames = (currentPage: number = 1) => {
     setIsLoading(true);
-    getGamesFiltered({ search, category, platforms: platform, sort_by: sortBy })
+    getGamesFiltered({ search, category, platforms: platform, sort_by: sortBy, page: currentPage })
       .then((data) => {
-        setGamesData(data);
+        if (data) {
+          setTotalPages(Math.ceil(data.length / 10)); // Assuming 10 items per page
+          setGamesData(data); 
+        }
         setIsLoading(false);
       })
       .catch((error) => {
@@ -38,8 +43,12 @@ const Main = () => {
   };
 
   useEffect(() => {
-    fetchGames();
-  }, []);
+    fetchGames(page);
+  }, [page]);
+
+  const handlePageChange = (_event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value);
+  };
 
   if (isLoading) {
     return <CircularProgress />;
@@ -47,7 +56,6 @@ const Main = () => {
 
   return (
     <>
-
       <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: 2, marginBottom: 2 }}>
         <Box sx={{ minWidth: { xs: '100%', sm: 200 }, mb: { xs: 2, sm: 0 } }}>
           <TextField
@@ -69,7 +77,6 @@ const Main = () => {
           </TextField>
         </Box>
 
-
         <Box sx={{ minWidth: 200, mb: { xs: 2, sm: 0 } }}>
           <TextField
             value={platform}
@@ -89,6 +96,7 @@ const Main = () => {
             <MenuItem value={0}>All Platforms</MenuItem>
           </TextField>
         </Box>
+
         <Box sx={{ minWidth: 200, mb: { xs: 2, sm: 0 } }}>
           <TextField
             value={sortBy}
@@ -105,9 +113,9 @@ const Main = () => {
             <MenuItem value="rating desc">Rating</MenuItem>
           </TextField>
         </Box>
-        <Button variant="contained" onClick={fetchGames} color="primary">Search</Button>
-
+        <Button variant="contained" onClick={() => fetchGames(page)} color="primary">Search</Button>
       </Box>
+
       <Grid container spacing={2} sx={{ flexGrow: 1 }}>
         {gamesData.map((game) => (
           <Grid key={game.id} item xs={12} sm={6} md={4}>
@@ -121,6 +129,15 @@ const Main = () => {
           </Grid>
         ))}
       </Grid>
+
+      <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+        <Pagination
+          count={totalPages}
+          page={page}
+          onChange={handlePageChange}
+          color="primary"
+        />
+      </Box>
     </>
   );
 };
