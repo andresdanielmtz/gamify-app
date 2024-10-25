@@ -13,6 +13,7 @@ import theme from "./themes";
 function App() {
   axios.defaults.baseURL = import.meta.env.VITE_BACKEND_ENDPOINT;
   axios.defaults.withCredentials = true;
+  axios.defaults.headers.post["Content-Type"] = "application/json";
 
   return (
     <ThemeProvider theme={theme}>

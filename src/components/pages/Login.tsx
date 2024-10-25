@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { Container, TextField, Button, Typography, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-
+import { loginAuth } from "../../api/auth";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -11,26 +10,11 @@ export default function Login() {
 
   const handleLogin = async (): Promise<void> => {
     try {
-      const response = await axios.post<{
-        message: string;
-        user: {
-          id: number;
-          username: string;
-        };
-      }>(
-        "/auth/login",
-        { username, password },
-        {
-          withCredentials: true,
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      console.log(response.data);
-      navigate("/");
+      await loginAuth(username, password).then(() => {
+        navigate("/");
+      });
     } catch (error) {
-      console.error("Failed to login", error);
+      console.error(error);
     }
   };
 

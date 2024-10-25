@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -12,8 +12,9 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import SearchIcon from "@mui/icons-material/Search";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
-import { IconButton } from "@mui/material";
+import { IconButton, Button } from "@mui/material";
 import { Link } from "react-router-dom";
+import { checkAuth, getUsername } from "../../api/auth";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -74,6 +75,7 @@ export default function PrimarySearchAppBar() {
     setAnchorEl(null);
     handleMobileMenuClose();
   };
+
 
   const menuId = "primary-search-account-menu";
   const renderMenu = (
@@ -170,6 +172,19 @@ export default function PrimarySearchAppBar() {
             margin: "0 auto",
           }}
         >
+          <Button
+            variant="solid"
+            sx={{ display: { xs: "none", md: "block" } }}
+            onClick={() => {
+              checkAuth().then((res) => {
+                console.log(res);
+              });
+            }}
+          >
+            {" "}
+            Check Auth
+          </Button>
+
           <Typography
             variant="h6"
             noWrap

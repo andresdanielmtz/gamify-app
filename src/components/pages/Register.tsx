@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { Container, TextField, Button, Typography, Box } from "@mui/material";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import { registerAuth } from "../../api/auth";
 export default function Register() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -10,21 +9,11 @@ export default function Register() {
 
   const handleRegister = async () => {
     try {
-      const response = await axios.post(
-        "/auth/register",
-        { username, password },
-        {
-          withCredentials: true,
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      if (response.status === 201) {
+      await registerAuth(username, password).then(() => {
         navigate("/login");
-      }
+      });
     } catch (error) {
-      console.error("Registration failed", error);
+      console.error(error);
     }
   };
 
