@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -14,7 +14,7 @@ import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import { IconButton, Button } from "@mui/material";
 import { Link } from "react-router-dom";
-import { checkAuth, getUsername } from "../../api/auth";
+import { checkAuth } from "../../api/auth";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
