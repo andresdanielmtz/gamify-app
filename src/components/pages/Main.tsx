@@ -1,5 +1,5 @@
 import GameCard from "../GameCard/Card";
-import { CircularProgress, Button, Select, MenuItem } from "@mui/material";
+import { CircularProgress, Button, MenuItem } from "@mui/material";
 import { useState, useEffect } from "react";
 import { getGamesFiltered } from "../../api/getGames";
 import { useNavigate } from "react-router-dom";
@@ -50,18 +50,18 @@ const Main = () => {
 
       <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: 2, marginBottom: 2 }}>
         <Box sx={{ minWidth: { xs: '100%', sm: 200 }, mb: { xs: 2, sm: 0 } }}>
-        <TextField
+          <TextField
             value={category}
             onChange={(e) => setCategory(Number(e.target.value))}
             select
             fullWidth
-            defaultValue={1}
+            defaultValue={0}
             label="Category"
             color="primary"
             sx={{ color: 'white' }}
           >
-            <MenuItem value={0}>All Categories</MenuItem>
-            <MenuItem value={1}>Main Category</MenuItem>
+            <MenuItem value={-1}>All Categories</MenuItem>
+            <MenuItem value={0}>Main Game</MenuItem>
             <MenuItem value={2}>Expansion</MenuItem>
             <MenuItem value={3}>Bundle</MenuItem>
             <MenuItem value={4}>Standalone Expansion</MenuItem>
@@ -71,7 +71,7 @@ const Main = () => {
 
 
         <Box sx={{ minWidth: 200, mb: { xs: 2, sm: 0 } }}>
-        <TextField
+          <TextField
             value={platform}
             onChange={(e) => setPlatform(Number(e.target.value))}
             select
@@ -81,15 +81,16 @@ const Main = () => {
             color="primary"
             sx={{ color: 'white' }}
           >
-          <MenuItem value={48}>PlayStation</MenuItem>
-          <MenuItem value={49}>Xbox</MenuItem>
-          <MenuItem value={130}>Nintendo Switch</MenuItem>
-          <MenuItem value={6}>PC</MenuItem>
+            <MenuItem value={-1}>All Categories</MenuItem>
+            <MenuItem value={48}>PlayStation</MenuItem>
+            <MenuItem value={49}>Xbox</MenuItem>
+            <MenuItem value={130}>Nintendo Switch</MenuItem>
+            <MenuItem value={6}>PC</MenuItem>
             <MenuItem value={0}>All Platforms</MenuItem>
-            </TextField>
+          </TextField>
         </Box>
         <Box sx={{ minWidth: 200, mb: { xs: 2, sm: 0 } }}>
-        <TextField
+          <TextField
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
             select
@@ -102,7 +103,7 @@ const Main = () => {
             <MenuItem value="name">Name</MenuItem>
             <MenuItem value="release_date">Release Date</MenuItem>
             <MenuItem value="rating desc">Rating</MenuItem>
-            </TextField>
+          </TextField>
         </Box>
         <Button variant="contained" onClick={fetchGames} color="primary">Search</Button>
 
