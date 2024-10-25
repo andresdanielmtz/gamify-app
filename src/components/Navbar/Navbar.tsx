@@ -12,9 +12,9 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import SearchIcon from "@mui/icons-material/Search";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
-import { IconButton, Button } from "@mui/material";
+import { IconButton } from "@mui/material";
 import { Link } from "react-router-dom";
-import { checkAuth } from "../../api/auth";
+
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -172,18 +172,6 @@ export default function PrimarySearchAppBar() {
             margin: "0 auto",
           }}
         >
-          <Button
-            variant="solid"
-            sx={{ display: { xs: "none", md: "block" } }}
-            onClick={() => {
-              checkAuth().then((res) => {
-                console.log(res);
-              });
-            }}
-          >
-            {" "}
-            Check Auth
-          </Button>
 
           <Typography
             variant="h6"

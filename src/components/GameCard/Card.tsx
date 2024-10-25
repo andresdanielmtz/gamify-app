@@ -5,12 +5,9 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import CloseIcon from '@mui/icons-material/Close';
-import Modal from '@mui/joy/Modal';
-import { ModalDialog } from '@mui/joy';
-import Fade from '@mui/material/Fade';
 import useStore from '../../createStore';
 import { unixToYear } from '../../utils/unixToDate';
+import { useNavigate } from 'react-router-dom';
 
 interface GameCardProps {
     id: string;
@@ -20,12 +17,12 @@ interface GameCardProps {
     date: number;
 }
 
-const GameCard: React.FC<GameCardProps> = ({ id, title, desc, image, date}) => {
+const GameCard: React.FC<GameCardProps> = ({ id, title, desc, image, date }) => {
     const [isHovered, setIsHovered] = useState(false);
-    const [isModalOpen, setIsModalOpen] = useState(false);
     const addGame = useStore((state) => state.addGame);
     const gamesPlayed = useStore((state) => state.gamesPlayed);
     const removeGame = useStore((state) => state.removeGame);
+    const navigate = useNavigate();
 
     const isLiked = gamesPlayed.some((game) => game.id === id);
     const gameYear = unixToYear(date);
@@ -40,12 +37,10 @@ const GameCard: React.FC<GameCardProps> = ({ id, title, desc, image, date}) => {
 
     const handleCardClick = (event: React.MouseEvent) => {
         event.stopPropagation();
-        setIsModalOpen(true);
+        navigate(`/game/${id}`);
     };
 
-    const handleCloseModal = () => {
-        setIsModalOpen(false);
-    };
+
 
     return (
         <>
@@ -108,51 +103,7 @@ const GameCard: React.FC<GameCardProps> = ({ id, title, desc, image, date}) => {
                 </Box>
             </Card>
 
-            <Modal
-                open={isModalOpen}
-                onClose={handleCloseModal}
-                aria-labelledby="game-modal-title"
-                aria-describedby="game-modal-description"
-            >
-                <Fade in={isModalOpen}>
-                    <ModalDialog>
-                        <Box sx={{
-                            position: 'absolute',
-                            top: '50%',
-                            left: '50%',
-                            transform: 'translate(-50%, -50%)',
-                            width: 400,
-                            bgcolor: 'background.paper',
-                            border: '2px solid #000',
-                            boxShadow: 24,
-                            p: 4,
-                            maxHeight: '90vh',
-                            overflowY: 'auto',
-                            fontFamily: 'Inter, sans-serif',
-                            borderRadius: '16px',
-                        }}>
-                            <IconButton
-                                aria-label="close"
-                                onClick={handleCloseModal}
-                                sx={{ position: 'absolute', top: 0, right: 0, color: 'black' }}
-                            >
-                                <CloseIcon />
-                            </IconButton>
 
-                            <Typography id="game-modal-title" variant="h4" gutterBottom component="h2" sx={{ color: "black", alignItems: "center" }}>
-                                <b>{title}</b>
-                            </Typography>
-
-                            <Box sx={{ my: 2 }}>
-                                <img src={image} alt={title} style={{ width: '100%', height: 'auto' }} />
-                            </Box>
-                            <Typography id="game-modal-description" sx={{ mt: 2, color: "black" }}>
-                                {desc || "No description available."}
-                            </Typography>
-                        </Box>
-                    </ModalDialog>
-                </Fade>
-            </Modal>
         </>
     );
 }

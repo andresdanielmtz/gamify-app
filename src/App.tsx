@@ -9,6 +9,7 @@ import Register from "./components/pages/Register";
 import Main from "./components/pages/Main";
 import { ThemeProvider } from "@emotion/react";
 import theme from "./themes";
+import GameDetails from "./components/GameCard/GameDetails";
 
 function App() {
   axios.defaults.baseURL = import.meta.env.VITE_BACKEND_ENDPOINT;
@@ -27,6 +28,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/game/:id" element={<GameDetails />} />
           </Routes>
         </Container>
       </div>
