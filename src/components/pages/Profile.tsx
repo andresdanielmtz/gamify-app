@@ -21,10 +21,10 @@ const Profile = () => {
                             }}>
                                 These are the games you've played:
                             </Typography>
-                            <Box sx={{ 
-                                display: 'grid', 
-                                gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' }, 
-                                gap: { xs: 3, sm: 2 } 
+                            <Box sx={{
+                                display: 'grid',
+                                gridTemplateColumns: { xs: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' },
+                                gap: { xs: 3, sm: 2 }
                             }}>
                                 {gamesPlayed.map((game) => (
                                     <GameCardProfile

@@ -96,10 +96,10 @@ export default function PrimarySearchAppBar() {
       }}
       open={isMenuOpen}
       onClose={handleMenuClose}
-      sx={{ marginTop: 6 }}
+      sx={{ marginTop: 6, color: "white" }}
     >
       <MenuItem onClick={handleMenuClose}>
-        <Link className="link-styles-dropdown" to="/login">
+        <Link className="link-styles-dropdown" to="/login" color="primary">
           Logout
         </Link>
       </MenuItem>
