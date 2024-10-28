@@ -6,21 +6,25 @@ interface Game {
     name: string;
     summary: string;
     cover: { url: string };
-    rating?: number; // Add rating property
+    rating?: number;
     date: number;
 }
 
 interface StoreState {
     gamesPlayed: Game[];
+    searchTerm: string; // Add searchTerm property
+    setSearchTerm: (term: string) => void; // Add setSearchTerm function
     addGame: (game: Game) => void;
-    removeGame: (id: string) => void; // Update removeGame to take only id
+    removeGame: (id: string) => void;
     modifyGame: (game: Game) => void;
     clearGames: () => void;
-    setRating: (id: string, rating: number) => void; // Add setRating function
+    setRating: (id: string, rating: number) => void;
 }
 
 const useStore = createStore<StoreState>((set) => ({
     gamesPlayed: [],
+    searchTerm: '', 
+    setSearchTerm: (term) => set({ searchTerm: term }), // Set the searchTerm
     addGame: (game) => set((state) => {
         const exists = state.gamesPlayed.some((g) => g.id === game.id);
         if (!exists) {
@@ -30,7 +34,7 @@ const useStore = createStore<StoreState>((set) => ({
     }),
     removeGame: (id) => set((state) => ({
         gamesPlayed: state.gamesPlayed.map((g) => (g.id === id ? { ...g, rating: 0 } : g)).filter((g) => g.id !== id),
-    })), // When removing the game, it will also remove its rating
+    })),
     modifyGame: (game) => set((state) => ({
         gamesPlayed: state.gamesPlayed.map((g) => (g.id === game.id ? game : g)),
     })),
@@ -38,9 +42,6 @@ const useStore = createStore<StoreState>((set) => ({
     setRating: (id, rating) => set((state) => ({
         gamesPlayed: state.gamesPlayed.map((g) => (g.id === id ? { ...g, rating } : g)),
     })),
-
-
-
 }));
 
 export default useStore;

@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Grid from "@mui/material/Grid2";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
+import useStore from "../../createStore";
 
 interface Game {
   id: string;
@@ -25,6 +26,7 @@ const Main = () => {
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
   const navigate = useNavigate();
+  const searchTerm = useStore((state) => state.searchTerm); // Access the search term from the store
 
   const fetchGames = (currentPage: number = 1) => {
     setIsLoading(true);
@@ -41,6 +43,11 @@ const Main = () => {
         navigate("/login");
       });
   };
+
+  const filteredGamesData = gamesData.filter(game =>
+    game.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
 
   useEffect(() => {
     fetchGames(page);
@@ -137,7 +144,7 @@ const Main = () => {
         sx={{ justifyContent: 'center', mb: 4 }}
         columns={{ xs: 12, sm: 12, md: 12, lg: 12 }}
       >
-        {gamesData.map((game) => (
+        {filteredGamesData.map((game) => (
           <Grid key={game.id} columns={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
               <GameCard

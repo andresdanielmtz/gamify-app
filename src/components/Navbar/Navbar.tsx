@@ -1,5 +1,5 @@
 import React from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useLocation } from "react-router-dom";
 import { Link as MuiLink } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -71,12 +71,14 @@ export default function PrimarySearchAppBar() {
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const navigate = useNavigate();
+  const location = useLocation(); // Get the current location
   const gamesPlayed = useStore((state) => state.gamesPlayed);
+  const setSearchTerm = useStore((state) => state.setSearchTerm); // Get setSearchTerm from the store
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-  const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+  const handleProfileMenuOpen = (event: { currentTarget: React.SetStateAction<HTMLElement | null>; }) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -87,6 +89,10 @@ export default function PrimarySearchAppBar() {
   const handleMenuClose = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
+  };
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value); // Update the search term in the store
   };
 
   const menuId = "primary-search-account-menu";
@@ -143,17 +149,17 @@ export default function PrimarySearchAppBar() {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton size="large" aria-label="show 4 new mails" color="primary">
-          <Badge badgeContent={4} color="error">
+        <IconButton size="large" aria-label="show games played" color="primary">
+          <Badge badgeContent={gamesPlayed.length} color="error">
             <StarIcon />
           </Badge>
         </IconButton>
-        <p>Messages</p>
+        <p>Games Played</p>
       </MenuItem>
       <MenuItem>
         <IconButton
           size="large"
-          aria-label="show 17 new notifications"
+          aria-label="show notifications"
           color="primary"
         >
           <Badge badgeContent={17} color="error">
@@ -201,22 +207,23 @@ export default function PrimarySearchAppBar() {
             sx={{ display: "flex", alignItems: "center" }}
             fontWeight={900}
           >
-            <StyledRouterLink sx={{
-              color: 'primary.main',
-            }} to="/">
+            <StyledRouterLink sx={{ color: 'primary.main' }} to="/">
               Gamify
             </StyledRouterLink>
           </Typography>
-          <Search sx={{ flexGrow: 1, maxWidth: "400px", mx: 2 }}>
-            <SearchIconWrapper>
-              <SearchIcon color="secondary" />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ "aria-label": "search" }}
-              sx={{ width: "100%" }}
-            />
-          </Search>
+          {location.pathname === "/" && ( // Conditionally render the search bar
+            <Search sx={{ flexGrow: 1, maxWidth: "400px", mx: 2 }}>
+              <SearchIconWrapper>
+                <SearchIcon color="secondary" />
+              </SearchIconWrapper>
+              <StyledInputBase
+                placeholder="Search…"
+                inputProps={{ "aria-label": "search" }}
+                sx={{ width: "100%" }}
+                onChange={handleSearchChange} // Add onChange handler
+              />
+            </Search>
+          )}
           <Box>
             <IconButton
               size="large"
