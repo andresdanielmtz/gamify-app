@@ -10,9 +10,6 @@ interface Game {
     date: number;
 }
 
-
-
-
 interface StoreState {
     gamesPlayed: Game[];
     addGame: (game: Game) => void;

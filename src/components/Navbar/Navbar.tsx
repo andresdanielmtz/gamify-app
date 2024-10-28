@@ -1,4 +1,6 @@
 import React from "react";
+import { Link as RouterLink } from "react-router-dom";
+import { Link as MuiLink } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -12,11 +14,11 @@ import SearchIcon from "@mui/icons-material/Search";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import { IconButton } from "@mui/material";
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import useStore from "../../createStore";
 import StarIcon from '@mui/icons-material/Star';
 
+// Styled components remain the same
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -56,17 +58,25 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
+// Styled RouterLink component
+const StyledRouterLink = styled(RouterLink)({
+  textDecoration: 'none',
+  color: 'inherit',
+  '&:hover': {
+    textDecoration: 'none',
+  },
+});
+
 export default function PrimarySearchAppBar() {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
-    React.useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const navigate = useNavigate();
   const gamesPlayed = useStore((state) => state.gamesPlayed);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-  const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+  const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -78,7 +88,6 @@ export default function PrimarySearchAppBar() {
     setAnchorEl(null);
     handleMobileMenuClose();
   };
-
 
   const menuId = "primary-search-account-menu";
   const renderMenu = (
@@ -96,12 +105,22 @@ export default function PrimarySearchAppBar() {
       }}
       open={isMenuOpen}
       onClose={handleMenuClose}
-      sx={{ marginTop: 6, color: "white" }}
+      sx={{ marginTop: 6 }}
     >
       <MenuItem onClick={handleMenuClose}>
-        <Link className="link-styles-dropdown" to="/login" color="primary">
+        <MuiLink
+          component={RouterLink}
+          to="/login"
+          sx={{
+            textDecoration: 'none',
+            color: 'primary.main',
+            '&:hover': {
+              textDecoration: 'none',
+            },
+          }}
+        >
           Logout
-        </Link>
+        </MuiLink>
       </MenuItem>
     </Menu>
   );
@@ -175,7 +194,6 @@ export default function PrimarySearchAppBar() {
             margin: "0 auto",
           }}
         >
-
           <Typography
             variant="h6"
             noWrap
@@ -183,9 +201,11 @@ export default function PrimarySearchAppBar() {
             sx={{ display: "flex", alignItems: "center" }}
             fontWeight={900}
           >
-            <Link to="/" className="link-styles">
+            <StyledRouterLink sx={{
+              color: 'primary.main',
+            }} to="/">
               Gamify
-            </Link>
+            </StyledRouterLink>
           </Typography>
           <Search sx={{ flexGrow: 1, maxWidth: "400px", mx: 2 }}>
             <SearchIconWrapper>
@@ -200,7 +220,7 @@ export default function PrimarySearchAppBar() {
           <Box>
             <IconButton
               size="large"
-              aria-label="show 4 new mails"
+              aria-label="show games played"
               color="secondary"
               onClick={() => navigate("/profile")}
             >
