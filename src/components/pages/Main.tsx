@@ -22,12 +22,11 @@ const Main = () => {
   const [category, setCategory] = useState<number>(0);
   const [platform, setPlatform] = useState<number>(130);
   const [sortBy, setSortBy] = useState<string>("rating desc");
-  const [page, setPage] = useState<number>(1); // Current page state
-  const [totalPages, setTotalPages] = useState<number>(1); // Total pages state
+  const [page, setPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(1);
   const navigate = useNavigate();
 
   const fetchGames = (currentPage: number = 1) => {
-
     setIsLoading(true);
     getGamesFiltered({ search, category, platforms: platform, sort_by: sortBy, page: currentPage })
       .then((data) => {
@@ -52,13 +51,24 @@ const Main = () => {
   };
 
   if (isLoading) {
-    return <CircularProgress />;
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <CircularProgress />
+      </Box>
+    );
   }
 
   return (
-    <>
-      <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: 2, marginBottom: 2 }}>
-        <Box sx={{ minWidth: { xs: '100%', sm: 200 }, mb: { xs: 2, sm: 0 } }}>
+    <Box sx={{ maxWidth: '1400px', mx: 'auto', px: { xs: 2, sm: 4 } }}>
+      <Box sx={{ 
+        display: 'flex', 
+        flexDirection: { xs: 'column', sm: 'row' }, 
+        gap: 2, 
+        mb: 4,
+        justifyContent: 'center',
+        alignItems: { xs: 'stretch', sm: 'flex-start' }
+      }}>
+        <Box sx={{ minWidth: { xs: '100%', sm: 200 } }}>
           <TextField
             value={category}
             onChange={(e) => setCategory(Number(e.target.value))}
@@ -67,7 +77,6 @@ const Main = () => {
             defaultValue={0}
             label="Category"
             color="primary"
-            sx={{ color: 'white' }}
           >
             <MenuItem value={-1}>All Categories</MenuItem>
             <MenuItem value={0}>Main Game</MenuItem>
@@ -78,7 +87,7 @@ const Main = () => {
           </TextField>
         </Box>
 
-        <Box sx={{ minWidth: 200, mb: { xs: 2, sm: 0 } }}>
+        <Box sx={{ minWidth: { xs: '100%', sm: 200 } }}>
           <TextField
             value={platform}
             onChange={(e) => setPlatform(Number(e.target.value))}
@@ -87,7 +96,6 @@ const Main = () => {
             defaultValue={0}
             label="Platform"
             color="primary"
-            sx={{ color: 'white' }}
           >
             <MenuItem value={-1}>All Categories</MenuItem>
             <MenuItem value={48}>PlayStation</MenuItem>
@@ -98,7 +106,7 @@ const Main = () => {
           </TextField>
         </Box>
 
-        <Box sx={{ minWidth: 200, mb: { xs: 2, sm: 0 } }}>
+        <Box sx={{ minWidth: { xs: '100%', sm: 200 } }}>
           <TextField
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
@@ -107,33 +115,44 @@ const Main = () => {
             defaultValue=""
             label="Sort By"
             color="primary"
-            sx={{ color: 'white' }}
           >
             <MenuItem value="name">Name</MenuItem>
             <MenuItem value="release_date">Release Date</MenuItem>
             <MenuItem value="rating desc">Rating</MenuItem>
           </TextField>
         </Box>
-        <Button variant="contained" onClick={() => fetchGames(page)} color="primary">Search</Button>
+        <Button 
+          variant="contained" 
+          onClick={() => fetchGames(page)} 
+          color="primary"
+          sx={{ height: { sm: '56px' } }}
+        >
+          Search
+        </Button>
       </Box>
 
-
-      <Grid container spacing={1} sx={{ flexGrow: 1, marginBottom: 2 }} columns={{ xs: 12, sm: 12, md: 12 }}>
+      <Grid 
+        container 
+        spacing={2} 
+        sx={{ justifyContent: 'center', mb: 4 }}
+        columns={{ xs: 12, sm: 12, md: 12, lg: 12 }}
+      >
         {gamesData.map((game) => (
-          <Grid key={game.id} columns={{ xs: 3, sm: 3, md: 3 }}>
-            <GameCard
-              date={game.first_release_date}
-              id={game.id}
-              title={game.name}
-              desc={game.summary}
-              image={game.cover?.url}
-            />
+          <Grid key={game.id} columns={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
+            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+              <GameCard
+                date={game.first_release_date}
+                id={game.id}
+                title={game.name}
+                desc={game.summary}
+                image={game.cover?.url}
+              />
+            </Box>
           </Grid>
         ))}
       </Grid>
 
-
-      <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+      <Box sx={{ display: 'flex', justifyContent: 'center', mb: 4 }}>
         <Pagination
           count={totalPages}
           page={page}
@@ -141,7 +160,7 @@ const Main = () => {
           color="primary"
         />
       </Box>
-    </>
+    </Box>
   );
 };
 
