@@ -5,10 +5,12 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import InfoIcon from '@mui/icons-material/Info';
 import ImageNotSupportedIcon from '@mui/icons-material/ImageNotSupported';
 import useStore from '../../createStore';
 import { unixToYear } from '../../utils/unixToDate';
 import { useNavigate } from 'react-router-dom';
+import { keyframes } from '@mui/system';
 
 interface GameCardProps {
     id: string;
@@ -18,8 +20,15 @@ interface GameCardProps {
     date: number;
 }
 
+const likeAnimation = keyframes`
+    0% { transform: scale(1); }
+    50% { transform: scale(1.3); }
+    100% { transform: scale(1); }
+`;
+
 const GameCard: React.FC<GameCardProps> = ({ id, title, desc, image, date }) => {
     const [isHovered, setIsHovered] = useState(false);
+    const [clickCount, setClickCount] = useState(0);
     const addGame = useStore((state) => state.addGame);
     const gamesPlayed = useStore((state) => state.gamesPlayed);
     const removeGame = useStore((state) => state.removeGame);
@@ -34,9 +43,18 @@ const GameCard: React.FC<GameCardProps> = ({ id, title, desc, image, date }) => 
         } else {
             addGame({ id, name: title, summary: desc || "", cover: { url: image || "" }, first_release_date: date, date });
         }
-    }
+    };
 
     const handleCardClick = (event: React.MouseEvent) => {
+        event.stopPropagation();
+        setClickCount((prev) => prev + 1);
+        if (clickCount === 1) {
+            handleLikeClick();
+        }
+        setTimeout(() => setClickCount(0), 300); // Reset click count after 300ms
+    };
+
+    const handleMoreInfoClick = (event: React.MouseEvent) => {
         event.stopPropagation();
         navigate(`/game/${id}`);
     };
@@ -46,8 +64,7 @@ const GameCard: React.FC<GameCardProps> = ({ id, title, desc, image, date }) => 
             <Card
                 sx={{
                     maxWidth: 400,
-                    width: 300, 
-                    m: 2,
+                    width: 250, 
                     height: 400,
                     position: 'relative',
                     overflow: 'hidden',
@@ -70,6 +87,7 @@ const GameCard: React.FC<GameCardProps> = ({ id, title, desc, image, date }) => 
                         height="400"
                         image={image}
                         alt={title}
+                        sx={{ userSelect: 'none' }}
                     />
                 ) : (
                     <Box
@@ -79,6 +97,7 @@ const GameCard: React.FC<GameCardProps> = ({ id, title, desc, image, date }) => 
                             justifyContent: 'center',
                             alignItems: 'center',
                             bgcolor: '#f0f0f0',
+                            userSelect: 'none',
                         }}
                     >
                         <ImageNotSupportedIcon sx={{ fontSize: 100, color: '#ccc' }} />
@@ -100,20 +119,38 @@ const GameCard: React.FC<GameCardProps> = ({ id, title, desc, image, date }) => 
                         color: 'white',
                         opacity: isHovered ? 1 : 0,
                         transition: 'opacity 0.3s ease-in-out',
+                        userSelect: 'none', // Prevent text selection
                     }}
                 >
-                    <Typography variant="h6">{title}</Typography>
-                    <Typography variant="body2">{gameYear}</Typography>
-                    <IconButton
-                        aria-label="add to favorites"
-                        sx={{ color: isLiked ? '#5fdca8' : 'white', mt: 1, transition: 'color 0.3s ease-in-out' }}
-                        onClick={(event) => {
-                            event.stopPropagation();
-                            handleLikeClick();
-                        }}
-                    >
-                        <FavoriteIcon />
-                    </IconButton>
+                    <Typography variant="h6" sx={{ userSelect: 'none' }}>{title}</Typography>
+                    <Typography variant="body2" sx={{ userSelect: 'none' }}>{gameYear}</Typography>
+
+                    <Box sx={{ display: 'flex', gap: 1, mt: 1 }}>
+                        {/* Like Button */}
+                        <IconButton
+                            aria-label="add to favorites"
+                            sx={{
+                                color: isLiked ? '#5fdca8' : 'white',
+                                transition: 'color 0.3s ease-in-out',
+                                animation: isLiked ? `${likeAnimation} 0.3s ease` : undefined,
+                            }}
+                            onClick={(event) => {
+                                event.stopPropagation();
+                                handleLikeClick();
+                            }}
+                        >
+                            <FavoriteIcon />
+                        </IconButton>
+
+                        {/* More Info Button */}
+                        <IconButton
+                            aria-label="more info"
+                            sx={{ color: 'white' }}
+                            onClick={handleMoreInfoClick}
+                        >
+                            <InfoIcon />
+                        </IconButton>
+                    </Box>
                 </Box>
             </Card>
         </>
