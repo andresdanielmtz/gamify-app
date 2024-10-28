@@ -11,19 +11,20 @@ import useStore from '../../createStore';
 import { unixToYear } from '../../utils/unixToDate';
 import { useNavigate } from 'react-router-dom';
 import { keyframes } from '@mui/system';
+import { toast } from 'react-toastify';
 
 interface GameCardProps {
     id: string;
     title: string;
     desc?: string;
-    image?: string;
+    image: string;
     date: number;
 }
 
 const likeAnimation = keyframes`
-    0% { transform: scale(1); }
-    50% { transform: scale(1.3); }
-    100% { transform: scale(1); }
+  0% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+  100% { transform: scale(1); }
 `;
 
 const GameCard: React.FC<GameCardProps> = ({ id, title, desc, image, date }) => {
@@ -40,8 +41,26 @@ const GameCard: React.FC<GameCardProps> = ({ id, title, desc, image, date }) => 
     const handleLikeClick = () => {
         if (isLiked) {
             removeGame(id);
+            toast.info(`Removed ${title} from favorites`, {
+                position: "top-right",
+                autoClose: 1500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
         } else {
             addGame({ id, name: title, summary: desc || "", cover: { url: image || "" }, first_release_date: date, date });
+            toast.success(`Added ${title} to favorites`, {
+                position: "top-right",
+                autoClose: 1500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
         }
     };
 
@@ -64,7 +83,7 @@ const GameCard: React.FC<GameCardProps> = ({ id, title, desc, image, date }) => 
             <Card
                 sx={{
                     maxWidth: 400,
-                    width: 250, 
+                    width: 250,
                     height: 400,
                     position: 'relative',
                     overflow: 'hidden',
@@ -103,7 +122,7 @@ const GameCard: React.FC<GameCardProps> = ({ id, title, desc, image, date }) => 
                         <ImageNotSupportedIcon sx={{ fontSize: 100, color: '#ccc' }} />
                     </Box>
                 )}
-                
+
                 <Box
                     sx={{
                         position: 'absolute',
@@ -155,6 +174,6 @@ const GameCard: React.FC<GameCardProps> = ({ id, title, desc, image, date }) => 
             </Card>
         </>
     );
-}
+};
 
 export default GameCard;
