@@ -1,12 +1,10 @@
-import GameCard from "../GameCard/Card";
-import { CircularProgress, Button, MenuItem, Pagination } from "@mui/material";
-import { useState, useEffect } from "react";
-import { getGamesFiltered } from "../../api/getGames";
+import React, { useState, useEffect } from "react";
+import { CircularProgress, Button, MenuItem, Pagination, TextField, Box } from "@mui/material";
+import { getGamesFiltered, getGameByName } from "../../api/getGames";
 import { useNavigate } from "react-router-dom";
-import Grid from "@mui/material/Grid2";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
+import GameCard from "../GameCard/Card";
 import useStore from "../../createStore";
+import Grid from "@mui/material/Grid2"
 
 interface Game {
   id: string;
@@ -19,7 +17,6 @@ interface Game {
 const Main = () => {
   const [gamesData, setGamesData] = useState<Game[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [search, setSearch] = useState<string>("");
   const [category, setCategory] = useState<number>(0);
   const [platform, setPlatform] = useState<number>(130);
   const [sortBy, setSortBy] = useState<string>("rating desc");
@@ -30,28 +27,46 @@ const Main = () => {
 
   const fetchGames = (currentPage: number = 1) => {
     setIsLoading(true);
-    getGamesFiltered({ search, category, platforms: platform, sort_by: sortBy, page: currentPage })
-      .then((data) => {
-        if (data) {
-          setTotalPages(Math.ceil(data.length / 10));
-          setGamesData(data);
-        }
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.error("Failed to fetch games", error);
-        navigate("/login");
-      });
+    if (searchTerm.trim() !== "") {
+      getGameByName(searchTerm)
+        .then((data) => {
+          if (data) {
+            setTotalPages(1); 
+            setGamesData([data]); 
+          }
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          console.error("Failed to fetch game by name", error);
+          setIsLoading(false);
+        });
+    } else {
+      getGamesFiltered({ category, platforms: platform, sort_by: sortBy, page: currentPage })
+        .then((data) => {
+          if (data) {
+            setGamesData(data);
+            setTotalPages(Math.ceil(data.length / 10));
+          }
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          console.error("Failed to fetch games", error);
+          navigate("/login");
+        });
+    }
   };
 
   const filteredGamesData = gamesData.filter(game =>
     game.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-
   useEffect(() => {
     fetchGames(page);
-  }, [page]);
+  }, [page, category, platform, sortBy]);
+
+  useEffect(() => {
+    setTotalPages(Math.ceil(filteredGamesData.length / 10));
+  }, [filteredGamesData]);
 
   const handlePageChange = (_event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
@@ -67,10 +82,10 @@ const Main = () => {
 
   return (
     <Box sx={{ maxWidth: '1400px', mx: 'auto', px: { xs: 2, sm: 4 } }}>
-      <Box sx={{ 
-        display: 'flex', 
-        flexDirection: { xs: 'column', sm: 'row' }, 
-        gap: 2, 
+      <Box sx={{
+        display: 'flex',
+        flexDirection: { xs: 'column', sm: 'row' },
+        gap: 2,
         mb: 4,
         justifyContent: 'center',
         alignItems: { xs: 'stretch', sm: 'flex-start' }
@@ -104,12 +119,13 @@ const Main = () => {
             label="Platform"
             color="primary"
           >
-            <MenuItem value={-1}>All Categories</MenuItem>
-            <MenuItem value={48}>PlayStation</MenuItem>
-            <MenuItem value={49}>Xbox</MenuItem>
+            <MenuItem value={-1}>All Platforms</MenuItem>
+            <MenuItem value={48}>PlayStation 4</MenuItem>
+            <MenuItem value={167}>PlayStation 5</MenuItem>
+            <MenuItem value={49}>Xbox One</MenuItem>
+            <MenuItem value={169}>Xbox Series S/X</MenuItem>
             <MenuItem value={130}>Nintendo Switch</MenuItem>
             <MenuItem value={6}>PC</MenuItem>
-            <MenuItem value={0}>All Platforms</MenuItem>
           </TextField>
         </Box>
 
@@ -128,9 +144,9 @@ const Main = () => {
             <MenuItem value="rating desc">Rating</MenuItem>
           </TextField>
         </Box>
-        <Button 
-          variant="contained" 
-          onClick={() => fetchGames(page)} 
+        <Button
+          variant="contained"
+          onClick={() => fetchGames(page)}
           color="primary"
           sx={{ height: { sm: '56px' } }}
         >
@@ -138,14 +154,14 @@ const Main = () => {
         </Button>
       </Box>
 
-      <Grid 
-        container 
-        spacing={2} 
+      <Grid
+        container
+        spacing={2}
         sx={{ justifyContent: 'center', mb: 4 }}
         columns={{ xs: 12, sm: 12, md: 12, lg: 12 }}
       >
         {filteredGamesData.map((game) => (
-          <Grid key={game.id} columns={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
+          <Grid key={game.id} columns={{xs: 12, sm:6, md:4, lg:3}}>
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
               <GameCard
                 date={game.first_release_date}

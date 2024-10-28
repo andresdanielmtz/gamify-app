@@ -16,3 +16,24 @@
   z-index: 1000;
   width: 100%;
 }
+
+body {
+  overflow-y: scroll; /* Always show vertical scrollbar */
+}
+
+body.scrollbar-visible {
+  padding-right: 15px; /* Space for scrollbar */
+}
+
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.8);
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

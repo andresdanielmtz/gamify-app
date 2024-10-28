@@ -71,9 +71,9 @@ export default function PrimarySearchAppBar() {
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const navigate = useNavigate();
-  const location = useLocation(); // Get the current location
+  const location = useLocation();
   const gamesPlayed = useStore((state) => state.gamesPlayed);
-  const setSearchTerm = useStore((state) => state.setSearchTerm); // Get setSearchTerm from the store
+  const setSearchTerm = useStore((state) => state.setSearchTerm);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
