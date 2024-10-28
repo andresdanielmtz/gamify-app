@@ -8,7 +8,7 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import '@fontsource/inter';
-import { ToastContainer } from 'react-toastify'
+import { ToastContainer, Zoom } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 
 
@@ -16,7 +16,7 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
       <App />
-      <ToastContainer />
+      <ToastContainer transition={Zoom}/>
     </BrowserRouter>
   </StrictMode>,
 )

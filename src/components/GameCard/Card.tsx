@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import { keyframes } from '@mui/system';
 import { toast } from 'react-toastify';
 
+
 interface GameCardProps {
     id: string;
     title: string;
@@ -42,7 +43,7 @@ const GameCard: React.FC<GameCardProps> = ({ id, title, desc, image, date }) => 
         if (isLiked) {
             removeGame(id);
             toast.info(`Removed ${title} from favorites`, {
-                position: "top-right",
+                position: "bottom-right",
                 autoClose: 1500,
                 hideProgressBar: false,
                 closeOnClick: true,
@@ -53,7 +54,7 @@ const GameCard: React.FC<GameCardProps> = ({ id, title, desc, image, date }) => 
         } else {
             addGame({ id, name: title, summary: desc || "", cover: { url: image || "" }, first_release_date: date, date });
             toast.success(`Added ${title} to favorites`, {
-                position: "top-right",
+                position: "bottom-right",
                 autoClose: 1500,
                 hideProgressBar: false,
                 closeOnClick: true,

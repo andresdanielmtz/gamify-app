@@ -24,36 +24,27 @@ const Main = () => {
   const [totalPages, setTotalPages] = useState<number>(1);
   const navigate = useNavigate();
   const searchTerm = useStore((state) => state.searchTerm); // Access the search term from the store
+  const limit = 10;
 
   const fetchGames = (currentPage: number = 1) => {
     setIsLoading(true);
-    if (searchTerm.trim() !== "") {
-      getGameByName(searchTerm)
-        .then((data) => {
-          if (data) {
-            setTotalPages(1); 
-            setGamesData([data]); 
-          }
-          setIsLoading(false);
-        })
-        .catch((error) => {
-          console.error("Failed to fetch game by name", error);
-          setIsLoading(false);
-        });
-    } else {
-      getGamesFiltered({ category, platforms: platform, sort_by: sortBy, page: currentPage })
-        .then((data) => {
-          if (data) {
-            setGamesData(data);
-            setTotalPages(Math.ceil(data.length / 10));
-          }
-          setIsLoading(false);
-        })
-        .catch((error) => {
-          console.error("Failed to fetch games", error);
-          navigate("/login");
-        });
-    }
+
+    getGamesFiltered({ category, platforms: platform, sort_by: sortBy, page: currentPage })
+      .then((data) => {
+        if (data) {
+          setGamesData(data);
+          const totalPages = Math.ceil(data.length / limit);
+          console.log("Total pages", totalPages);
+
+          setTotalPages(totalPages);
+        }
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.error("Failed to fetch games", error);
+        navigate("/login");
+      });
+
   };
 
   const filteredGamesData = gamesData.filter(game =>
@@ -161,7 +152,7 @@ const Main = () => {
         columns={{ xs: 12, sm: 12, md: 12, lg: 12 }}
       >
         {filteredGamesData.map((game) => (
-          <Grid key={game.id} columns={{xs: 12, sm:6, md:4, lg:3}}>
+          <Grid key={game.id} columns={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
               <GameCard
                 date={game.first_release_date}
