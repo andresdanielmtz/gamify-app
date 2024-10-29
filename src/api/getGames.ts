@@ -41,15 +41,15 @@ export const getGamesFiltered = async (params: GameFilterParams = {}) => {
     category: 1,
     platforms: 49,
     sort_by: "rating desc",
-    limit: 100,
+    limit: 450,
   };
 
   const queryParams = { ...defaultParams, ...params };
-  const offset = (queryParams.page ? queryParams.page - 1 : 0) * (queryParams.limit || 50);
+  const offset = (queryParams.page ? queryParams.page - 1 : 0) * (queryParams.limit || 30);
   let url = `/api/igdb-proxy?category=${queryParams.category}&sort_by=${queryParams.sort_by}&limit=${queryParams.limit}&offset=${offset}`;
 
   if (queryParams.platforms !== undefined) {
-    url += `&platforms=${queryParams.platforms}`;
+    url += `&platforms=[${queryParams.platforms}]`;
   }
   if (queryParams.platforms == -1) {
     url = url.replace(/&platforms=-1/, "&platforms=48,167,49,169,130,6");

@@ -17,7 +17,7 @@ interface Game {
 const Main = () => {
   const [gamesData, setGamesData] = useState<Game[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [category, setCategory] = useState<number>(0);
+  const [category, setCategory] = useState<number>(1);
   const [platform, setPlatform] = useState<number>(130);
   const [sortBy, setSortBy] = useState<string>("rating desc");
   const [page, setPage] = useState<number>(1);
@@ -92,7 +92,7 @@ const Main = () => {
             color="primary"
           >
             <MenuItem value={-1}>All Categories</MenuItem>
-            <MenuItem value={0}>Main Game</MenuItem>
+            <MenuItem value={1}>Main Game</MenuItem>
             <MenuItem value={2}>Expansion</MenuItem>
             <MenuItem value={3}>Bundle</MenuItem>
             <MenuItem value={4}>Standalone Expansion</MenuItem>
@@ -179,3 +179,8 @@ const Main = () => {
 };
 
 export default Main;
+
+[/**
+  columns={{ xs: 12, sm: 6, md: 4, lg: 3 }}
+  
+  */]
