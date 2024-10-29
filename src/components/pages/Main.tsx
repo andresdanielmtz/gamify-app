@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { CircularProgress, Button, MenuItem, Pagination, TextField, Box } from "@mui/material";
-import { getGamesFiltered, getGameByName } from "../../api/getGames";
+import { getGamesFiltered } from "../../api/getGames";
 import { useNavigate } from "react-router-dom";
 import GameCard from "../GameCard/Card";
 import useStore from "../../createStore";
@@ -159,7 +159,7 @@ const Main = () => {
                 id={game.id}
                 title={game.name}
                 desc={game.summary}
-                image={game.cover?.url}
+                image={game.cover?.url || 'default-image-url'}
               />
             </Box>
           </Grid>

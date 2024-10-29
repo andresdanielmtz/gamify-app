@@ -18,7 +18,6 @@ import { useNavigate } from "react-router-dom";
 import useStore from "../../createStore";
 import StarIcon from '@mui/icons-material/Star';
 
-// Styled components remain the same
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -191,7 +190,7 @@ export default function PrimarySearchAppBar() {
         margin: "0 auto",
       }}
     >
-      <AppBar position="static" sx={{ backgroundColor: "#1e1e1e" }}>
+      <AppBar position="static" sx={{ backgroundColor: "#070707" }}>
         <Toolbar
           sx={{
             justifyContent: "space-between",

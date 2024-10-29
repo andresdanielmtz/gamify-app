@@ -1,8 +1,11 @@
 import { Container, Typography, Box } from '@mui/material';
 import useStore from '../../createStore';
 import GameCardProfile from '../GameCard/ProfileCard';
+
 const Profile = () => {
     const gamesPlayed = useStore((state) => state.gamesPlayed);
+    const ratings = useStore((state) => state.ratings);
+
     return (
         <div id="main-page">
             <Container maxWidth="lg" sx={{ mb: 4 }}>
@@ -11,15 +14,14 @@ const Profile = () => {
                         fontWeight: 900,
                         paddingBottom: 1,
                     }}>
-                        User
+                        Games Rated
                     </Typography>
                     {gamesPlayed.length > 0 ? (
                         <>
                             <Typography variant="h6" gutterBottom sx={{
                                 paddingBottom: 5,
-
                             }}>
-                                These are the games you've played:
+                                These are the games you've liked:
                             </Typography>
                             <Box sx={{
                                 display: 'grid',
@@ -34,6 +36,7 @@ const Profile = () => {
                                         description={game.summary}
                                         image={game.cover.url}
                                         date={game.first_release_date}
+                                        rating={ratings[game.id] || 0}
                                     />
                                 ))}
                             </Box>
