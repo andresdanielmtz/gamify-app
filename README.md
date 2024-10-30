@@ -1,21 +1,28 @@
 # Gamify
-## IBM Intern Introduction Project 
+## IBM Application Developer Intern Introduction Project 
+
+![Project Overview](./public/project_ss.png)
+
 ### Requirements
-To run this project you'll also need to run the middleware, please refer to [its corresponding page](https://github.com/andresdanielmtz/gamify-api)
+- Node v22.9.0
+- npm v10.9.0
+- Python 3.9.6
 
 
 ### Installation
-To run this project, use the following commands 
+To run this project, use the following commands:
 
 ```
 git clone https://github.com/andresdanielmtz/gamify-app
+cd gamify-app
 npm i
 ```
 
-In another terminal instance, use the following commands 
+In another terminal instance, execute the following commands 
 
 ```
 git clone https://github.com/andresdanielmtz/gamify-api
+cd gamify-api
 python3 -m venv .venv
 . .venv/bin/activate
 pip -r install requirements.txt
@@ -53,3 +60,33 @@ ACCESS_TOKEN = [IGDB Token]
 ```
 
 The project must be running on `http://localhost:5173`, notice that it is running on the HTTP protocol.
+
+### Project Structure
+
+The project directory is structured as follows:
+
+```
+/gamify-app
+    ├── public
+    ├── src
+    │   ├── assets
+    │   ├── components
+    │   ├── pages
+    │   ├── services
+    │   ├── App.js
+    │   ├── main.js
+    ├── .env
+    ├── package.json
+    ├── README.md
+
+/gamify-api
+    ├── app
+    ├── migrations
+    ├── tests
+    ├── .env
+    ├── requirements.txt
+    ├── server.py
+    ├── README.md
+```
+
+This structure helps in organizing the frontend and backend code separately, making it easier to manage and scale the project.
