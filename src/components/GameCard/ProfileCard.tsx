@@ -35,7 +35,7 @@ export default function GameCardProfile({ id, title, image, rating, date }: Prof
       setRating(id, newValue);
       decreasePendingRatings();
       toast.success(`Rating for ${title} set to ${newValue}`, {
-        position: "top-right",
+        position: "bottom-right",
         autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,

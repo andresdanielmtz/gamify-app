@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Rating from '@mui/material/Rating';
 import StarIcon from '@mui/icons-material/Star';
 import useStore from '../../createStore';
@@ -12,12 +12,22 @@ interface RatingProps {
 export default function RatingGame({ value, id, onChange }: RatingProps) {
     const [rating, setRatingState] = useState(value);
     const setRating = useStore((state) => state.setRating);
+    const decreasePendingRatings = useStore((state) => state.decreasePendingRatings);
+    const ratings = useStore((state) => state.ratings);
+
+    useEffect(() => {
+        setRatingState(value);
+    }, [value]);
 
     const handleRatingChange = (event: React.ChangeEvent<{}>, newValue: number | null) => {
         if (newValue !== null) {
             setRatingState(newValue);
             setRating(id, newValue);
             onChange(event, newValue);
+
+            if (!ratings[id]) {
+                decreasePendingRatings();
+            }
         }
     };
 
