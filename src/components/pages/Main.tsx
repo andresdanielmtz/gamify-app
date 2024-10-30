@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { CircularProgress, Button, MenuItem, Pagination, TextField, Box } from "@mui/material";
+import { CircularProgress, MenuItem, Pagination, TextField, Box } from "@mui/material";
 import { getGamesFiltered } from "../../api/getGames";
 import { useNavigate } from "react-router-dom";
 import GameCard from "../GameCard/Card";
@@ -24,7 +24,7 @@ const Main = () => {
   const [totalPages, setTotalPages] = useState<number>(1);
   const navigate = useNavigate();
   const searchTerm = useStore((state) => state.searchTerm); // Access the search term from the store
-  const limit = 10;
+  const limit = 30;
 
   const fetchGames = (currentPage: number = 1) => {
     setIsLoading(true);
@@ -135,14 +135,6 @@ const Main = () => {
             <MenuItem value="rating desc">Rating</MenuItem>
           </TextField>
         </Box>
-        <Button
-          variant="contained"
-          onClick={() => fetchGames(page)}
-          color="primary"
-          sx={{ height: { sm: '56px' } }}
-        >
-          Search
-        </Button>
       </Box>
 
       <Grid
