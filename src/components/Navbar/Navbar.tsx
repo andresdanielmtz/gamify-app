@@ -60,7 +60,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState<null | HTMLElement>(null);
-  const [searchTerm, setSearchTerm] = useState("");
   const setSearch = useStore((state) => state.setSearchTerm);
   const gamesPlayed = useStore((state) => state.gamesPlayed);
   const navigate = useNavigate();
@@ -80,7 +79,6 @@ const Navbar = () => {
   };
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value);
     debouncedSearch(event.target.value);
   };
 
