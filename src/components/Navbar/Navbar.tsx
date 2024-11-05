@@ -112,8 +112,8 @@ const Navbar = () => {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>
-        <Link className="link-styles-dropdown" to="/login" style={{ color: 'primary' }}>
-          Logout
+        <Link className="link-styles-dropdown" to="/info" style={{ color: 'primary' }}>
+          Info
         </Link>
       </MenuItem>
     </Menu>

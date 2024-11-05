@@ -4,13 +4,13 @@ import { useNavigate } from "react-router-dom";
 import { loginAuth } from "../../api/auth";
 
 export default function Login() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   const handleLogin = async (): Promise<void> => {
     try {
-      await loginAuth(username, password).then(() => {
+      await loginAuth(email, password).then(() => {
         navigate("/");
       });
     } catch (error) {
@@ -24,18 +24,14 @@ export default function Login() {
         <Typography variant="h4" gutterBottom>
           Login
         </Typography>
-        <Box
-          sx={{
-            marginBottom: 1,
-          }}
-        >
+        <Box sx={{ marginBottom: 1 }}>
           <TextField
-            label="Username"
-            type="text"
+            label="Email"
+            type="email"
             fullWidth
             margin="normal"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             InputProps={{
               style: {
                 backgroundColor: "rgba(255, 255, 255, 0.10)",
@@ -64,20 +60,10 @@ export default function Login() {
             }}
           />
         </Box>
-        <Button
-          variant="contained"
-          color="primary"
-          fullWidth
-          onClick={handleLogin}
-        >
+        <Button variant="contained" color="primary" fullWidth onClick={handleLogin}>
           Login
         </Button>
-        <Button
-          variant="text"
-          color="primary"
-          fullWidth
-          onClick={() => navigate("/register")}
-        >
+        <Button variant="text" color="primary" fullWidth onClick={() => navigate("/register")}>
           Don't have an account? Register
         </Button>
       </Box>

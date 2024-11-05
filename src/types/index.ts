@@ -12,7 +12,18 @@ export interface Game {
     summary: string;
     first_release_date: number;
     cover?: { url: string };
-  }
+}
+
+export interface AuthResponse {
+    message?: string;
+    error?: string;
+    user?: {
+      id: string;
+      email: string;
+    };
+}
+  
+  
 
 export interface GameAPIResponse {
     id: string;

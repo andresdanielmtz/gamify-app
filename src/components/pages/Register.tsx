@@ -2,14 +2,15 @@ import { useState } from "react";
 import { Container, TextField, Button, Typography, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { registerAuth } from "../../api/auth";
+
 export default function Register() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
   const handleRegister = async () => {
     try {
-      await registerAuth(username, password).then(() => {
+      await registerAuth(email, password).then(() => {
         navigate("/login");
       });
     } catch (error) {
@@ -23,18 +24,14 @@ export default function Register() {
         <Typography variant="h4" gutterBottom>
           Register
         </Typography>
-        <Box
-          sx={{
-            marginBottom: 1,
-          }}
-        >
+        <Box sx={{ marginBottom: 1 }}>
           <TextField
-            label="Username"
-            type="text"
+            label="Email"
+            type="email"
             fullWidth
             margin="normal"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             InputProps={{
               style: {
                 backgroundColor: "rgba(255, 255, 255, 0.10)",
@@ -63,20 +60,10 @@ export default function Register() {
             }}
           />
         </Box>
-        <Button
-          variant="contained"
-          color="primary"
-          fullWidth
-          onClick={handleRegister}
-        >
+        <Button variant="contained" color="primary" fullWidth onClick={handleRegister}>
           Register
         </Button>
-        <Button
-          variant="text"
-          color="primary"
-          fullWidth
-          onClick={() => navigate("/login")}
-        >
+        <Button variant="text" color="primary" fullWidth onClick={() => navigate("/login")}>
           Already have an account? Login
         </Button>
       </Box>
