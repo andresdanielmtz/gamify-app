@@ -6,6 +6,14 @@ export interface GameCardProps {
     date: number;
 }
 
+export interface Game {
+    id: string;
+    name: string;
+    summary: string;
+    first_release_date: number;
+    cover?: { url: string };
+  }
+
 export interface GameAPIResponse {
     id: string;
     name?: string;

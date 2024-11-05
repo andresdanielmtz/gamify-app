@@ -5,14 +5,7 @@ import { useNavigate } from "react-router-dom";
 import GameCard from "../GameCard/Card";
 import useStore from "../../createStore";
 import Grid from "@mui/material/Grid2"
-
-interface Game {
-  id: string;
-  name: string;
-  summary: string;
-  first_release_date: number;
-  cover?: { url: string };
-}
+import { Game } from "../../types";
 
 const Main = () => {
   const [gamesData, setGamesData] = useState<Game[]>([]);
