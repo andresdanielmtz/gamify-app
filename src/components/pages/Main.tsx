@@ -131,8 +131,10 @@ const Main = () => {
             color="primary"
           >
             <MenuItem value="name">Name</MenuItem>
-            <MenuItem value="release_date">Release Date</MenuItem>
+            <MenuItem value="date desc">Release Date</MenuItem>
+            <MenuItem value="date asc"> Release Date Ascending</MenuItem>
             <MenuItem value="rating desc">Rating</MenuItem>
+            <MenuItem value="popularity desc">Popularity</MenuItem>
           </TextField>
         </Box>
       </Box>

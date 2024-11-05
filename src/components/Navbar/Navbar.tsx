@@ -1,3 +1,4 @@
+// src/components/Navbar/Navbar.tsx
 import React, { useState, useCallback } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -45,25 +46,28 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",
-  width: "100%",
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create("width"),
     width: "100%",
+    [theme.breakpoints.up("md")]: {
+      width: "20ch",
+    },
   },
 }));
-
-
 
 const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState<null | HTMLElement>(null);
+  const [searchTerm, setSearchTerm] = useState("");
   const setSearch = useStore((state) => state.setSearchTerm);
   const gamesPlayed = useStore((state) => state.gamesPlayed);
+  const pendingRatings = useStore((state) => state.pendingRatings);
   const navigate = useNavigate();
   const theme = useTheme();
   const location = useLocation();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -79,6 +83,7 @@ const Navbar = () => {
   };
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
     debouncedSearch(event.target.value);
   };
 
@@ -164,6 +169,7 @@ const Navbar = () => {
       </MenuItem>
     </Menu>
   );
+
   return (
     <Box
       sx={{
@@ -173,7 +179,7 @@ const Navbar = () => {
         margin: "0 auto",
       }}
     >
-      <AppBar position="sticky" sx={{ backgroundColor: "#070707" }}>
+      <AppBar position="static" sx={{ backgroundColor: "#070707" }}>
         <Toolbar
           sx={{
             justifyContent: "space-between",
@@ -193,19 +199,19 @@ const Navbar = () => {
               Gamify
             </Link>
           </Typography>
-            {location.pathname === "/" && !useMediaQuery(theme.breakpoints.down("sm")) && (
+          {location.pathname === "/" && !isMobile && (
             <Search sx={{ flexGrow: 1, maxWidth: "400px", mx: 2 }}>
               <SearchIconWrapper>
-              <SearchIcon color="secondary" />
+                <SearchIcon color="secondary" />
               </SearchIconWrapper>
               <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ "aria-label": "search" }}
-              sx={{ width: "100%" }}
-              onChange={handleSearchChange} // Add onChange handler
+                placeholder="Search…"
+                inputProps={{ "aria-label": "search" }}
+                sx={{ width: "100%" }}
+                onChange={handleSearchChange} // Add onChange handler
               />
             </Search>
-            )}
+          )}
           <Box>
             <IconButton
               size="large"
