@@ -54,10 +54,16 @@ const useStore = createStore<StoreState>((set) => ({
     }
     return state;
   }),
-  removeGame: (id) => set((state) => ({
-    gamesPlayed: state.gamesPlayed.filter((g) => g.id !== id),
-    pendingRatings: state.pendingRatings > 0 ? state.pendingRatings - 1 : 0,
-  })),
+  removeGame: (id) => set((state) => {
+    const newGamesPlayed = state.gamesPlayed.filter((g) => g.id !== id);
+    const newRatings = { ...state.ratings };
+    delete newRatings[id];
+    return {
+      gamesPlayed: newGamesPlayed,
+      ratings: newRatings,
+      pendingRatings: state.pendingRatings > 0 ? state.pendingRatings - 1 : 0,
+    };
+  }),
   modifyGame: (game) => set((state) => ({
     gamesPlayed: state.gamesPlayed.map((g) => (g.id === game.id ? game : g)),
   })),

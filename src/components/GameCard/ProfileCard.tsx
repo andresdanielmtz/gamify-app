@@ -47,6 +47,7 @@ const GameCardProfile: React.FC<ProfileGameCardProps> = ({ id, title, image, rat
 
   const handleDelete = () => {
     removeGame(id);
+    setRating(id, 0);
     toast.info(`Removed ${title} from games played`, {
       position: "top-right",
       autoClose: 3000,
