@@ -1,4 +1,3 @@
-// src/components/GameCard/ProfileCard.tsx
 import React, { useState } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -16,7 +15,7 @@ import { unixToYear } from '../../utils/unixToDate';
 import { toast } from 'react-toastify';
 import { ProfileGameCardProps } from '../../types';
 
-export default function GameCardProfile({ id, title, image, rating, date }: ProfileGameCardProps) {
+const GameCardProfile: React.FC<ProfileGameCardProps> = ({ id, title, image, rating, date }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const setRating = useStore((state) => state.setRating);
   const decreasePendingRatings = useStore((state) => state.decreasePendingRatings);
@@ -83,36 +82,37 @@ export default function GameCardProfile({ id, title, image, rating, date }: Prof
             id={id}
             onChange={handleRatingChange}
           />
-
-          <IconButton
-            aria-label="settings"
-            onClick={handleMenuOpen}
-            sx={{ position: 'absolute', top: 8, right: 8 }}
-          >
-            <MoreVertIcon />
-          </IconButton>
-          <Popover
-            open={Boolean(anchorEl)}
-            anchorEl={anchorEl}
-            onClose={handleMenuClose}
-            anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-          >
-            <MenuItem onClick={handleDelete}>
-              <DeleteIcon sx={{ mr: 1 }} />
-              Delete
-            </MenuItem>
-          </Popover>
-
         </CardContent>
+
+        <IconButton
+        aria-label="settings"
+        onClick={handleMenuOpen}
+        sx={{ position: 'absolute', top: 8, right: 8 }}
+      >
+        <MoreVertIcon />
+      </IconButton>
+      <Popover
+        open={Boolean(anchorEl)}
+        anchorEl={anchorEl}
+        onClose={handleMenuClose}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+      >
+        <MenuItem onClick={handleDelete}>
+          <DeleteIcon sx={{ mr: 1 }} />
+          Delete
+        </MenuItem>
+      </Popover>
       </CardActionArea>
 
     </Card>
   );
-}
+};
+
+export default GameCardProfile;

@@ -1,22 +1,28 @@
+// src/components/pages/Main.tsx
 import React, { useState, useEffect } from "react";
 import { CircularProgress, MenuItem, Pagination, TextField, Box } from "@mui/material";
 import { getGamesFiltered } from "../../api/getGames";
 import { useNavigate } from "react-router-dom";
 import GameCard from "../GameCard/Card";
 import useStore from "../../createStore";
-import Grid from "@mui/material/Grid2"
+import Grid from "@mui/material/Grid2";
 import { Game } from "../../types";
 
 const Main = () => {
   const [gamesData, setGamesData] = useState<Game[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [category, setCategory] = useState<number>(1);
-  const [platform, setPlatform] = useState<number>(130);
-  const [sortBy, setSortBy] = useState<string>("rating desc");
-  const [page, setPage] = useState<number>(1);
-  const [totalPages, setTotalPages] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(0);
   const navigate = useNavigate();
-  const searchTerm = useStore((state) => state.searchTerm); // Access the search term from the store
+  const searchTerm = useStore((state) => state.searchTerm);
+  const category = useStore((state) => state.category);
+  const platform = useStore((state) => state.platform);
+  const sortBy = useStore((state) => state.sortBy);
+  const page = useStore((state) => state.page);
+  const setCategory = useStore((state) => state.setCategory);
+  const setPlatform = useStore((state) => state.setPlatform);
+  const setSortBy = useStore((state) => state.setSortBy);
+  const setPage = useStore((state) => state.setPage);
+
   const limit = 30;
 
   const fetchGames = (currentPage: number = 1) => {
@@ -37,7 +43,6 @@ const Main = () => {
         console.error("Failed to fetch games", error);
         navigate("/login");
       });
-
   };
 
   const filteredGamesData = gamesData.filter(game =>

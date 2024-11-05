@@ -16,7 +16,15 @@ interface StoreState {
   searchTerm: string;
   pendingRatings: number;
   ratings: { [id: string]: number };
+  category: number;
+  platform: number;
+  sortBy: string;
+  page: number;
   setSearchTerm: (term: string) => void;
+  setCategory: (category: number) => void;
+  setPlatform: (platform: number) => void;
+  setSortBy: (sortBy: string) => void;
+  setPage: (page: number) => void;
   addGame: (game: Game) => void;
   removeGame: (id: string) => void;
   modifyGame: (game: Game) => void;
@@ -30,7 +38,15 @@ const useStore = createStore<StoreState>((set) => ({
   searchTerm: '',
   pendingRatings: 0,
   ratings: {},
+  category: 1,
+  platform: 130,
+  sortBy: 'rating desc',
+  page: 1,
   setSearchTerm: (term) => set({ searchTerm: term }),
+  setCategory: (category) => set({ category }),
+  setPlatform: (platform) => set({ platform }),
+  setSortBy: (sortBy) => set({ sortBy }),
+  setPage: (page) => set({ page }),
   addGame: (game) => set((state) => {
     const exists = state.gamesPlayed.some((g) => g.id === game.id);
     if (!exists) {

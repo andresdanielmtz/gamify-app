@@ -1,5 +1,4 @@
-// src/components/Navbar/Navbar.tsx
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -60,7 +59,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState<null | HTMLElement>(null);
-  const [searchTerm, setSearchTerm] = useState("");
+  const searchTerm = useStore((state) => state.searchTerm);
   const setSearch = useStore((state) => state.setSearchTerm);
   const gamesPlayed = useStore((state) => state.gamesPlayed);
   const pendingRatings = useStore((state) => state.pendingRatings);
@@ -83,7 +82,7 @@ const Navbar = () => {
   };
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value);
+    setSearch(event.target.value);
     debouncedSearch(event.target.value);
   };
 
@@ -137,33 +136,16 @@ const Navbar = () => {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton size="large" aria-label="show 4 new mails" color="primary">
-          <Badge badgeContent={4} color="error">
-            <StarIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="show 17 new notifications"
-          color="primary"
-        >
-          <Badge badgeContent={17} color="error">
+        <IconButton size="large" aria-label="show pending ratings" color="inherit">
+          <Badge badgeContent={pendingRatings} color="error">
             <NotificationsIcon />
           </Badge>
         </IconButton>
-        <p>Notifications</p>
+        <p>Pending Ratings</p>
       </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          size="large"
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-        >
-          <AccountCircle color="secondary" />
+        <IconButton size="large" aria-label="account of current user" aria-controls="primary-search-account-menu" aria-haspopup="true" color="inherit">
+          <AccountCircle />
         </IconButton>
         <p>Profile</p>
       </MenuItem>
@@ -171,35 +153,13 @@ const Navbar = () => {
   );
 
   return (
-    <Box
-      sx={{
-        flexGrow: 1,
-        width: "100%",
-        alignContent: "center",
-        margin: "0 auto",
-      }}
-    >
-      <AppBar position="static" sx={{ backgroundColor: "#070707" }}>
-        <Toolbar
-          sx={{
-            justifyContent: "space-between",
-            maxWidth: "lg",
-            width: "100%",
-            margin: "0 auto",
-          }}
-        >
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: "flex", alignItems: "center" }}
-            fontWeight={900}
-          >
-            <Link to="/">
-              Gamify
-            </Link>
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h6" noWrap component="div" sx={{ display: { xs: "none", sm: "block" } }}>
+            Gamify
           </Typography>
-          {location.pathname === "/" && !isMobile && (
+          {location.pathname === "/" && (
             <Search sx={{ flexGrow: 1, maxWidth: "400px", mx: 2 }}>
               <SearchIconWrapper>
                 <SearchIcon color="secondary" />
@@ -208,31 +168,19 @@ const Navbar = () => {
                 placeholder="Search…"
                 inputProps={{ "aria-label": "search" }}
                 sx={{ width: "100%" }}
-                onChange={handleSearchChange} // Add onChange handler
+                value={searchTerm}
+                onChange={handleSearchChange}
               />
             </Search>
           )}
-          <Box>
-            <IconButton
-              size="large"
-              aria-label="show games played"
-              color="secondary"
-              onClick={() => navigate("/profile")}
-            >
+          <Box sx={{ flexGrow: 1 }} />
+          <Box sx={{ display: { xs: "none", md: "flex" } }}>
+            <IconButton size="large" aria-label="show games played" color="inherit" onClick={() => navigate("/profile")}>
               <Badge badgeContent={gamesPlayed.length} color="error">
                 <StarIcon />
               </Badge>
             </IconButton>
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="secondary"
-              sx={{ mr: 2 }}
-            >
+            <IconButton size="large" edge="end" aria-label="account of current user" aria-controls={menuId} aria-haspopup="true" onClick={handleProfileMenuOpen} color="inherit">
               <AccountCircle />
             </IconButton>
           </Box>
