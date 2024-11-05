@@ -98,7 +98,7 @@ const Navbar = () => {
     <Menu
       anchorEl={anchorEl}
       anchorOrigin={{
-        vertical: "top",
+        vertical: "bottom",  // Changes the anchor to bottom instead of top
         horizontal: "right",
       }}
       id={menuId}
@@ -109,15 +109,15 @@ const Navbar = () => {
       }}
       open={Boolean(anchorEl)}
       onClose={handleMenuClose}
+
     >
       <MenuItem onClick={handleMenuClose}>
-        <Link className="link-styles-dropdown" to="/info" style={{ color: 'primary' }}>
+        <Link className="link-styles-dropdown" to="/info" style={{ color: '#5fdca8' }}>
           Info
         </Link>
       </MenuItem>
     </Menu>
   );
-
   const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = (
     <Menu
@@ -156,9 +156,12 @@ const Navbar = () => {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6" noWrap component="div" sx={{ display: { xs: "none", sm: "block" } }}>
-            Gamify
-          </Typography>
+        <Typography variant="h6" noWrap component="div" sx={{ display: { xs: "none", sm: "block" } }}>
+  <Link to="/" style={{ textDecoration: 'none', color: '#5fdca8' }}>
+    Gamify
+  </Link>
+</Typography>
+
           {location.pathname === "/" && (
             <Search sx={{ flexGrow: 1, maxWidth: "400px", mx: 2 }}>
               <SearchIconWrapper>
