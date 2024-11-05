@@ -153,7 +153,7 @@ const Main = () => {
                 id={game.id}
                 title={game.name}
                 desc={game.summary}
-                image={game.cover?.url || 'default-image-url'}
+                image={game.cover?.url || ''}
               />
             </Box>
           </Grid>
@@ -173,8 +173,3 @@ const Main = () => {
 };
 
 export default Main;
-
-[/**
-  columns={{ xs: 12, sm: 6, md: 4, lg: 3 }}
-  
-  */]
