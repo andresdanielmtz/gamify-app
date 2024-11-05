@@ -28,20 +28,10 @@ function Info() {
         marginTop: 5,
         padding: 2,
         boxShadow: 3,
+        borderRadius: 2, // Add this line to round the card
       }}
     >
       <CardContent>
-        <Typography
-          variant="h5"
-          component="h2"
-          sx={{
-            fontWeight: 'bold',
-            marginBottom: 2,
-            textAlign: 'center',
-          }}
-        >
-          Gamify
-        </Typography>
         <Avatar
           alt="Andrés Martínez"
           src={githubData?.avatar_url || ''}
@@ -52,7 +42,7 @@ function Info() {
           }}
         />
         <Typography
-          variant="h6"
+          variant="h5"
           component="h3"
           align="center"
           sx = {{
