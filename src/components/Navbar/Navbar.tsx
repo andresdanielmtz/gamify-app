@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -98,7 +98,7 @@ const Navbar = () => {
     <Menu
       anchorEl={anchorEl}
       anchorOrigin={{
-        vertical: "bottom",  // Changes the anchor to bottom instead of top
+        vertical: "bottom",
         horizontal: "right",
       }}
       id={menuId}
@@ -109,7 +109,6 @@ const Navbar = () => {
       }}
       open={Boolean(anchorEl)}
       onClose={handleMenuClose}
-
     >
       <MenuItem onClick={handleMenuClose}>
         <Link className="link-styles-dropdown" to="/info" style={{ color: '#5fdca8' }}>
@@ -118,6 +117,7 @@ const Navbar = () => {
       </MenuItem>
     </Menu>
   );
+
   const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = (
     <Menu
@@ -155,12 +155,12 @@ const Navbar = () => {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
-        <Toolbar>
-        <Typography variant="h6" noWrap component="div" sx={{ display: { xs: "none", sm: "block" } }}>
-  <Link to="/" style={{ textDecoration: 'none', color: '#5fdca8' }}>
-    Gamify
-  </Link>
-</Typography>
+        <Toolbar sx={{ flexDirection: { xs: 'column', sm: 'row' }, alignItems: 'center' }}>
+          <Typography variant="h6" noWrap component="div" sx={{ display: { xs: "block", sm: "block" }, mb: { xs: 1, sm: 0 }, minWidth: '100px' }}>
+            <Link to="/" style={{ textDecoration: 'none', color: '#5fdca8' }}>
+              Gamify
+            </Link>
+          </Typography>
 
           {location.pathname === "/" && (
             <Search sx={{ flexGrow: 1, maxWidth: "400px", mx: 2 }}>
@@ -177,8 +177,8 @@ const Navbar = () => {
             </Search>
           )}
           <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <IconButton size="large" aria-label="show games played" color="inherit" onClick={() => navigate("/profile")}>
+          <Box sx={{ display: { xs: 'flex', sm: 'flex' }, justifyContent: { xs: 'center', sm: 'flex-end' }, width: '100%', mt: { xs: 1, sm: 0 } }}>
+            <IconButton size="large" aria-label="show pending ratings" color="inherit" onClick={() => navigate("/profile")}>
               <Badge badgeContent={pendingRatings} color="error">
                 <StarIcon />
               </Badge>

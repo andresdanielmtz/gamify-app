@@ -1,4 +1,3 @@
-// src/components/Rating/Rating.tsx
 import React, { useState, useEffect } from 'react';
 import Rating from '@mui/material/Rating';
 import StarIcon from '@mui/icons-material/Star';

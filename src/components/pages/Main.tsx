@@ -1,4 +1,3 @@
-// src/components/pages/Main.tsx
 import React, { useState, useEffect } from "react";
 import { CircularProgress, MenuItem, Pagination, TextField, Box } from "@mui/material";
 import { getGamesFiltered } from "../../api/getGames";

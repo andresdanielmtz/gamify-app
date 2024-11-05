@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Card, CardContent, Typography, Avatar } from '@mui/material';
+import Box from '@mui/material/Box';
 
 interface GithubData {
   avatar_url: string;
@@ -61,6 +62,17 @@ function Info() {
           }}
         >
           CRUD Introduction Project, Application Developer Intern @ IBM
+        </Typography>
+        <Typography component="div">
+          <Box
+            sx={{
+              fontStyle: 'italic',
+              textAlign: 'center',
+              marginTop: 4,
+            }}
+          >
+            Thank you for using my project!
+          </Box>
         </Typography>
       </CardContent>
     </Card>
