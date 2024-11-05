@@ -21,7 +21,6 @@ export const getGames = async ({ search = "", platforms = [], ...params } = {}) 
     ...params,
   };
 
-  // Join platforms into a comma-separated string
   const platformsString = queryParams.platforms.join(",");
 
   const url = `/api/igdb-covers?category=${queryParams.category}&platforms=${platformsString}&sort_by=${queryParams.sort_by}&limit=${queryParams.limit}`;
@@ -43,19 +42,28 @@ export const getGamesFiltered = async (params: GameFilterParams = {}) => {
     sort_by: "rating desc",
     limit: 450,
   };
-
   const queryParams = { ...defaultParams, ...params };
   const offset = (queryParams.page ? queryParams.page - 1 : 0) * (queryParams.limit || 30);
   let url = `/api/igdb-proxy?category=${queryParams.category}&sort_by=${queryParams.sort_by}&limit=${queryParams.limit}&offset=${offset}`;
 
+  // Common platform IDs in IGDB:
+  // 6 - PC (Microsoft Windows)
+  // 48 - PlayStation 4
+  // 49 - Xbox One
+  // 130 - Nintendo Switch
+  // 167 - PlayStation 5
+  // 169 - Xbox Series X|S
+
   if (queryParams.platforms !== undefined) {
-    url += `&platforms=[${queryParams.platforms}]`;
+    url += `&platforms=(${queryParams.platforms})`;
   }
   if (queryParams.platforms == -1) {
-    url = url.replace(/&platforms=-1/, "&platforms=48,167,49,169,130,6");
-    defaultParams.limit = 600;
-
+    url = url.replace("&platforms=(-1)", "&platforms=(6,48,49,130,167,169)"); // Modern platforms
+    console.log("All modern platforms");
+    queryParams.limit = 600;
   }
+  
+  console.log(`url: ${url}`);
   try {
     const response = await axios.get(url);
     console.log(response.data);
