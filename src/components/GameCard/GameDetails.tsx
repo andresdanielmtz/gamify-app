@@ -13,6 +13,7 @@ const GameDetails: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [gameDetails, setGameDetails] = useState<GameAPIResponse | null>(null);
+  
 
   const gamesPlayed = useStore((state) => state.gamesPlayed);
   const addGame = useStore((state) => state.addGame);
@@ -89,12 +90,12 @@ const GameDetails: React.FC = () => {
     );
   }
 
-  // Normalize the data structure since it might come from different sources
   const {
     name = gameDetails.title || '',
     summary = gameDetails.desc || '',
     cover = { url: gameDetails.image || '' },
     first_release_date = gameDetails.date || 0,
+    rating = gameDetails.rating || 0
   } = gameDetails;
 
   return (
