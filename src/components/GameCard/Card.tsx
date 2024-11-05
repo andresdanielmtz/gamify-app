@@ -10,17 +10,9 @@ import ImageNotSupportedIcon from '@mui/icons-material/ImageNotSupported';
 import useStore from '../../createStore';
 import { unixToYear } from '../../utils/unixToDate';
 import { useNavigate } from 'react-router-dom';
-import { keyframes } from '@mui/system';
+import { keyframes } from '@mui/system'; 
 import { toast } from 'react-toastify';
-
-
-interface GameCardProps {
-    id: string;
-    title: string;
-    desc?: string;
-    image: string;
-    date: number;
-}
+import { GameCardProps } from "../../types";
 
 const likeAnimation = keyframes`
   0% { transform: scale(1); }

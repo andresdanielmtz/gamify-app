@@ -1,12 +1,5 @@
 import axios from "axios";
-
-interface GameFilterParams {
-  category?: number;
-  platforms?: number;
-  sort_by?: string;
-  limit?: number;
-  page?: number;
-}
+import { GameFilterParams } from "../types";
 
 export const getGames = async ({ search = "", platforms = [], ...params } = {}) => {
   const defaultParams = {

@@ -5,7 +5,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import useStore from '../../createStore';
 import axios, { AxiosError } from 'axios';
-import { GameAPIResponse, NormalizedGameDetails } from '../../types/GameCardProps';
+import { GameAPIResponse, NormalizedGameDetails } from '../../types';
 
 const GameDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();

@@ -20,6 +20,15 @@ export interface GameAPIResponse {
     date?: number;
 }
 
+export interface ProfileGameCardProps {
+    id: string;
+    title: string;
+    description: string;
+    image: string;
+    rating?: number;
+    date: number;
+  }
+
 export interface NormalizedGameDetails {
     id: string;
     name: string;
@@ -30,4 +39,13 @@ export interface NormalizedGameDetails {
     first_release_date: number;
     date: number;
 }
+
+
+export interface GameFilterParams {
+    category?: number;
+    platforms?: number;
+    sort_by?: string;
+    limit?: number;
+    page?: number;
+  }
 

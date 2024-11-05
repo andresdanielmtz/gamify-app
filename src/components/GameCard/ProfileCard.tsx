@@ -14,15 +14,7 @@ import RatingGame from '../Rating/Rating';
 import useStore from '../../createStore';
 import { unixToYear } from '../../utils/unixToDate';
 import { toast } from 'react-toastify';
-
-interface ProfileGameCardProps {
-  id: string;
-  title: string;
-  description: string;
-  image: string;
-  rating?: number;
-  date: number;
-}
+import { ProfileGameCardProps } from '../../types';
 
 export default function GameCardProfile({ id, title, image, rating, date }: ProfileGameCardProps) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
