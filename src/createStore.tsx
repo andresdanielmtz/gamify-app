@@ -68,12 +68,15 @@ const useStore = createStore<StoreState>((set) => ({
     gamesPlayed: state.gamesPlayed.map((g) => (g.id === game.id ? game : g)),
   })),
   clearGames: () => set({ gamesPlayed: [] }),
-  setRating: (id, rating) => set((state) => ({
-    ratings: { ...state.ratings, [id]: rating },
-    pendingRatings: state.pendingRatings > 0 ? state.pendingRatings - 1 : 0,
-  })),
+  setRating: (id, rating) => set((state) => {
+    const isNewRating = !state.ratings[id];
+    return {
+      ratings: { ...state.ratings, [id]: rating },
+      pendingRatings: isNewRating && state.pendingRatings > 0 ? state.pendingRatings - 0.5 : state.pendingRatings,
+    };
+  }),
   decreasePendingRatings: () => set((state) => ({
-    pendingRatings: state.pendingRatings > 0 ? state.pendingRatings - 1 : 0,
+    pendingRatings: state.pendingRatings > 0 ? state.pendingRatings - 0.5 : 0,
   })),
 }));
 

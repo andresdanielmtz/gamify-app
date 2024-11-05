@@ -179,7 +179,7 @@ const Navbar = () => {
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <IconButton size="large" aria-label="show games played" color="inherit" onClick={() => navigate("/profile")}>
-              <Badge badgeContent={gamesPlayed.length} color="error">
+              <Badge badgeContent={pendingRatings} color="error">
                 <StarIcon />
               </Badge>
             </IconButton>

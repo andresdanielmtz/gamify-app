@@ -1,3 +1,4 @@
+// src/components/GameCard/ProfileCard.tsx
 import React, { useState } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -47,7 +48,7 @@ const GameCardProfile: React.FC<ProfileGameCardProps> = ({ id, title, image, rat
 
   const handleDelete = () => {
     removeGame(id);
-    setRating(id, 0);
+    setRating(id, 0); // Reset the rating to 0
     toast.info(`Removed ${title} from games played`, {
       position: "top-right",
       autoClose: 3000,
@@ -70,9 +71,19 @@ const GameCardProfile: React.FC<ProfileGameCardProps> = ({ id, title, image, rat
           height="140"
           image={image}
           alt={title}
+          sx={{
+            objectFit: 'cover',
+            '@media (max-width: 600px)': {
+              height: 100,
+            },
+          }}
         />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
+          <Typography gutterBottom variant="h5" component="div" sx={{
+            '@media (max-width: 600px)': {
+              fontSize: '1.2rem',
+            },
+          }}>
             {title}
           </Typography>
           <Typography variant="body2" color="text.secondary">
@@ -84,8 +95,8 @@ const GameCardProfile: React.FC<ProfileGameCardProps> = ({ id, title, image, rat
             onChange={handleRatingChange}
           />
         </CardContent>
-
-        <IconButton
+      </CardActionArea>
+      <IconButton
         aria-label="settings"
         onClick={handleMenuOpen}
         sx={{ position: 'absolute', top: 8, right: 8 }}
@@ -110,8 +121,6 @@ const GameCardProfile: React.FC<ProfileGameCardProps> = ({ id, title, image, rat
           Delete
         </MenuItem>
       </Popover>
-      </CardActionArea>
-
     </Card>
   );
 };

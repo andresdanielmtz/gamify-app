@@ -5,7 +5,6 @@ import { getGamesFiltered } from "../../api/getGames";
 import { useNavigate } from "react-router-dom";
 import GameCard from "../GameCard/Card";
 import useStore from "../../createStore";
-import Grid from "@mui/material/Grid2";
 import { Game } from "../../types";
 
 const Main = () => {
@@ -136,26 +135,25 @@ const Main = () => {
         </Box>
       </Box>
 
-      <Grid
-        container
-        spacing={2}
-        sx={{ justifyContent: 'center', mb: 4 }}
-        columns={{ xs: 12, sm: 12, md: 12, lg: 12 }}
-      >
+      <Box sx={{
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+        gap: 2,
+        mb: 4,
+      }}>
         {filteredGamesData.map((game) => (
-          <Grid key={game.id} columns={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
-            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-              <GameCard
-                date={game.first_release_date}
-                id={game.id}
-                title={game.name}
-                desc={game.summary}
-                image={game.cover?.url || ''}
-              />
-            </Box>
-          </Grid>
+          <Box key={game.id} sx={{ display: 'flex', justifyContent: 'center', width: { xs: '100%', sm: '48%', md: '23%' } }}>
+            <GameCard
+              date={game.first_release_date}
+              id={game.id}
+              title={game.name}
+              desc={game.summary}
+              image={game.cover?.url || ''}
+            />
+          </Box>
         ))}
-      </Grid>
+      </Box>
 
       <Box sx={{ display: 'flex', justifyContent: 'center', mb: 4 }}>
         <Pagination
