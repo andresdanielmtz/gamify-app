@@ -3,6 +3,8 @@
 
 ![Project Overview](./public/project_ss.png)
 
+> This project got presented as the CRUD introduction project @ IBM Mexico. As an Application Developer Intern I had the opportunity to design, create and subsequently implement this project. The project got showcased on November 5th, 2024.  
+
 ### Requirements
 - Node v22.9.0
 - npm v10.9.0
